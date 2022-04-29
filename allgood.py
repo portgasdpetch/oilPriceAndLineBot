@@ -3,6 +3,7 @@ from selenium.webdriver.common.keys import Keys
 import time
 from bs4 import BeautifulSoup as soup
 import os
+from collections import defaultdict
 
 opt = webdriver.ChromeOptions()
 opt.add_argument('headless')
@@ -23,26 +24,19 @@ todayprice = table[0].findAll('div', {'class': 'oil_price_colum'})
 #row = table2[0].findAll('div',{'class':'oil_price_colum_name_odd'})
 # print(todayprice)
 
-oilType = ['Gasoline95', 'Gasohol95', 'Gasohol91', 'GasoholE20',
-           'GasoholE85', 'Disel B7', 'Diesel', 'Disel B20', 'B7PremiumDiesel', 'Date']
-oilDealer = ['PTT', 'Bangchak', 'Shell', 'Esso', 'Caltrex',
-             'IRPC', 'PT', 'Susco', 'Pure', 'SuscoDealer']
-# ,'PTT','Bangchak','Shell','Esso','Caltrex','IRPC','PT','Susco','Pure','SuscoDealer'
-# ,'PTT','Bangchak','Shell','Esso','Caltrex','IRPC','PT','Susco','Pure','SuscoDealer'
-# ,'PTT','Bangchak','Shell','Esso','Caltrex','IRPC','PT','Susco','Pure','SuscoDealer'
-# ,'PTT','Bangchak','Shell','Esso','Caltrex','IRPC','PT','Susco','Pure','SuscoDealer'
-# ,'PTT','Bangchak','Shell','Esso','Caltrex','IRPC','PT','Susco','Pure','SuscoDealer'
-# ,'PTT','Bangchak','Shell','Esso','Caltrex','IRPC','PT','Susco','Pure','SuscoDealer'
-# ,'PTT','Bangchak','Shell','Esso','Caltrex','IRPC','PT','Susco','Pure','SuscoDealer'
-# ,'PTT','Bangchak','Shell','Esso','Caltrex','IRPC','PT','Susco','Pure','SuscoDealer'
-# ,'PTT','Bangchak','Shell','Esso','Caltrex','IRPC','PT','Susco','Pure','SuscoDealer')
+oilType = ('Gasoline95', 'Gasohol95', 'Gasohol91', 'GasoholE20',
+           'GasoholE85', 'Disel B7', 'Diesel', 'Disel B20', 'B7PremiumDiesel', 'Date')
+oilDealer = ('PTT', 'Bangchak', 'Shell', 'Esso', 'Caltrex',
+             'IRPC', 'PT', 'Susco', 'Pure', 'SuscoDealer')
 oilPrice = []
 
 for ol in todayprice:
     oilPrice.append(ol.text)
 
-# print(oilPrice)
-# print(type(oilDealer[1]))
+# print("Oil Price\t\t: ",oilPrice)
+# print("Oil Dealer\t: ",oilDealer)
+# print("Oil Type\t\t: ",oilType)
+# print(type(oilPrice))
 # print(type('Bangchak'))
 # print(oilDealer)
 
@@ -57,10 +51,44 @@ t = 0
 d = 0
 p = 0
 
-result = {oilType[0]: {oilDealer[0]: oilPrice[0], d[1]: p[1], d[2]: p[2], d[3]: p[3], d[4]: p[4], d[5]: p[5], d[6]: p[6], d[7]: p[7], d[8]: p[8], d[9]: p[9]},
-          oilType[1]: {oilDealer[0]: oilPrice[10], d[1]: p[11], d[2]: p[12], d[3]: p[13], d[4]: p[14], d[5]: p[15], d[6]: p[16], d[7]: p[17], d[8]: p[18], d[9]: p[19]},}
-print(result)
+#print(result)
 
+# while(p<100):
+#     p += 1
+#     while(d<10):
+#         d += 1
+#         while(t<10):
+#             d += 1
+
+result = {oilType[0]: {oilDealer[0]: oilPrice[0], oilDealer[1]: oilPrice[1], oilDealer[2]: oilPrice[2], oilDealer[3]: oilPrice[3], oilDealer[4]: oilPrice[4], 
+        oilDealer[5]: oilPrice[5], oilDealer[6]: oilPrice[6], oilDealer[7]: oilPrice[7], oilDealer[8]: oilPrice[8], oilDealer[9]: oilPrice[9]},
+        oilType[1]: {oilDealer[0]: oilPrice[10], oilDealer[1]: oilPrice[11], oilDealer[2]: oilPrice[12], oilDealer[3]: oilPrice[13], oilDealer[4]: oilPrice[14],
+        oilDealer[5]: oilPrice[15], oilDealer[6]: oilPrice[16], oilDealer[7]: oilPrice[17], oilDealer[8]: oilPrice[18], oilDealer[9]: oilPrice[19]},
+        oilType[2]: {oilDealer[0]: oilPrice[20], oilDealer[1]: oilPrice[21], oilDealer[2]: oilPrice[22], oilDealer[3]: oilPrice[23], oilDealer[4]: oilPrice[24],
+        oilDealer[5]: oilPrice[25], oilDealer[6]: oilPrice[26], oilDealer[7]: oilPrice[27], oilDealer[8]: oilPrice[28], oilDealer[9]: oilPrice[29]},
+        oilType[3]: {oilDealer[0]: oilPrice[30], oilDealer[1]: oilPrice[31], oilDealer[2]: oilPrice[32], oilDealer[3]: oilPrice[33], oilDealer[4]: oilPrice[34],
+        oilDealer[5]: oilPrice[35], oilDealer[6]: oilPrice[36], oilDealer[7]: oilPrice[37], oilDealer[8]: oilPrice[38], oilDealer[9]: oilPrice[39]},
+        oilType[4]: {oilDealer[0]: oilPrice[40], oilDealer[1]: oilPrice[41], oilDealer[2]: oilPrice[42], oilDealer[3]: oilPrice[43], oilDealer[4]: oilPrice[44],
+        oilDealer[5]: oilPrice[45], oilDealer[6]: oilPrice[46], oilDealer[7]: oilPrice[47], oilDealer[8]: oilPrice[48], oilDealer[9]: oilPrice[49]},
+        oilType[5]: {oilDealer[0]: oilPrice[50], oilDealer[1]: oilPrice[51], oilDealer[2]: oilPrice[52], oilDealer[3]: oilPrice[53], oilDealer[4]: oilPrice[54],
+        oilDealer[5]: oilPrice[55], oilDealer[6]: oilPrice[56], oilDealer[7]: oilPrice[57], oilDealer[8]: oilPrice[58], oilDealer[9]: oilPrice[59]},
+        oilType[6]: {oilDealer[0]: oilPrice[60], oilDealer[1]: oilPrice[61], oilDealer[2]: oilPrice[62], oilDealer[3]: oilPrice[63], oilDealer[4]: oilPrice[64],
+        oilDealer[5]: oilPrice[65], oilDealer[6]: oilPrice[66], oilDealer[7]: oilPrice[67], oilDealer[8]: oilPrice[68], oilDealer[9]: oilPrice[69]},
+        oilType[7]: {oilDealer[0]: oilPrice[70], oilDealer[1]: oilPrice[71], oilDealer[2]: oilPrice[72], oilDealer[3]: oilPrice[73], oilDealer[4]: oilPrice[74],
+        oilDealer[5]: oilPrice[75], oilDealer[6]: oilPrice[76], oilDealer[7]: oilPrice[77], oilDealer[8]: oilPrice[78], oilDealer[9]: oilPrice[79]},
+        oilType[8]: {oilDealer[0]: oilPrice[80], oilDealer[1]: oilPrice[81], oilDealer[2]: oilPrice[82], oilDealer[3]: oilPrice[83], oilDealer[4]: oilPrice[84],
+        oilDealer[5]: oilPrice[85], oilDealer[6]: oilPrice[86], oilDealer[7]: oilPrice[87], oilDealer[8]: oilPrice[88], oilDealer[9]: oilPrice[89]},
+        oilType[9]: {oilDealer[0]: oilPrice[90], oilDealer[1]: oilPrice[91], oilDealer[2]: oilPrice[92], oilDealer[3]: oilPrice[93], oilDealer[4]: oilPrice[94],
+        oilDealer[5]: oilPrice[95], oilDealer[6]: oilPrice[96], oilDealer[7]: oilPrice[97], oilDealer[8]: oilPrice[98], oilDealer[9]: oilPrice[99]}}
+
+print(result)
+# print(result.get("Gasoline95"))
+
+# result2={}
+# result2 = {oilType[0]:{oilDealer[0]:oilPrice[0]}}
+
+
+# print(result2)
 
 
 # os.system("taskkill /im chromedriver.exe") #kill chromedriver process to regain memory
