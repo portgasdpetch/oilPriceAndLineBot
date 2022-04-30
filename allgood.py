@@ -26,11 +26,11 @@ todayprice = table[0].findAll('div', {'class': 'oil_price_colum'})
 
 oilType = ('Gasoline95', 'Gasohol95', 'Gasohol91', 'GasoholE20',
         'GasoholE85', 'DieselB7', 'Diesel', 'DieselB20', 'B7PremiumDiesel', 'Date')
-oilType2 = ['Gasoline95', 'Gasohol95', 'Gasohol91', 'GasoholE20',
-        'GasoholE85', 'DieselB7', 'Diesel', 'DieselB20', 'B7PremiumDiesel', 'Date']
+oilType2 = ('Gasoline95', 'Gasohol95', 'Gasohol91', 'GasoholE20',
+        'GasoholE85', 'DieselB7', 'Diesel', 'DieselB20', 'B7PremiumDiesel', 'Date')
 oilDealer = ('PTT', 'Bangchak', 'Shell', 'Esso', 'Caltrex',
         'IRPC', 'PT', 'Susco', 'Pure', 'SuscoDealer')
-oilDealer2 = ['PTT', 'Bangchak', 'Shell', 'Esso', 'Caltrex',
+oilDealer2 = ('PTT', 'Bangchak', 'Shell', 'Esso', 'Caltrex',
         'IRPC', 'PT', 'Susco', 'Pure', 'SuscoDealer','PTT', 'Bangchak', 'Shell', 'Esso', 'Caltrex',
         'IRPC', 'PT', 'Susco', 'Pure', 'SuscoDealer','PTT', 'Bangchak', 'Shell', 'Esso', 'Caltrex',
         'IRPC', 'PT', 'Susco', 'Pure', 'SuscoDealer','PTT', 'Bangchak', 'Shell', 'Esso', 'Caltrex',
@@ -40,7 +40,7 @@ oilDealer2 = ['PTT', 'Bangchak', 'Shell', 'Esso', 'Caltrex',
         'IRPC', 'PT', 'Susco', 'Pure', 'SuscoDealer','PTT', 'Bangchak', 'Shell', 'Esso', 'Caltrex',
         'IRPC', 'PT', 'Susco', 'Pure', 'SuscoDealer','PTT', 'Bangchak', 'Shell', 'Esso', 'Caltrex',
         'IRPC', 'PT', 'Susco', 'Pure', 'SuscoDealer','PTT', 'Bangchak', 'Shell', 'Esso', 'Caltrex',
-        'IRPC', 'PT', 'Susco', 'Pure', 'SuscoDealer']
+        'IRPC', 'PT', 'Susco', 'Pure', 'SuscoDealer')
 oilPrice = []
 
 for ol in todayprice:
@@ -101,8 +101,22 @@ result = {oilType[0]: {oilDealer[0]: oilPrice[0], oilDealer[1]: oilPrice[1], oil
         # x += 1
 
 newResult = {}
-newResult = {oilType2[0]:{oilDealer2[0]:oilPrice[0]}}
-print(newResult)
+a=0
+b=0
+while(a<10):
+    while(b<100):
+        newResult = {oilType2[a]:{oilDealer2[b]:oilPrice[b]}}
+        b += 1
+        print(newResult)
+        if(b%10):
+            a += 1
+        if(b==99):
+            break
+    if(a==9):
+        break
+
+
+
 
 from songline import Sendline
 
