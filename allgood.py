@@ -25,9 +25,22 @@ todayprice = table[0].findAll('div', {'class': 'oil_price_colum'})
 # print(todayprice)
 
 oilType = ('Gasoline95', 'Gasohol95', 'Gasohol91', 'GasoholE20',
-           'GasoholE85', 'Disel B7', 'Diesel', 'Disel B20', 'B7PremiumDiesel', 'Date')
+        'GasoholE85', 'DieselB7', 'Diesel', 'DieselB20', 'B7PremiumDiesel', 'Date')
+oilType2 = ['Gasoline95', 'Gasohol95', 'Gasohol91', 'GasoholE20',
+        'GasoholE85', 'DieselB7', 'Diesel', 'DieselB20', 'B7PremiumDiesel', 'Date']
 oilDealer = ('PTT', 'Bangchak', 'Shell', 'Esso', 'Caltrex',
-             'IRPC', 'PT', 'Susco', 'Pure', 'SuscoDealer')
+        'IRPC', 'PT', 'Susco', 'Pure', 'SuscoDealer')
+oilDealer2 = ['PTT', 'Bangchak', 'Shell', 'Esso', 'Caltrex',
+        'IRPC', 'PT', 'Susco', 'Pure', 'SuscoDealer','PTT', 'Bangchak', 'Shell', 'Esso', 'Caltrex',
+        'IRPC', 'PT', 'Susco', 'Pure', 'SuscoDealer','PTT', 'Bangchak', 'Shell', 'Esso', 'Caltrex',
+        'IRPC', 'PT', 'Susco', 'Pure', 'SuscoDealer','PTT', 'Bangchak', 'Shell', 'Esso', 'Caltrex',
+        'IRPC', 'PT', 'Susco', 'Pure', 'SuscoDealer','PTT', 'Bangchak', 'Shell', 'Esso', 'Caltrex',
+        'IRPC', 'PT', 'Susco', 'Pure', 'SuscoDealer','PTT', 'Bangchak', 'Shell', 'Esso', 'Caltrex',
+        'IRPC', 'PT', 'Susco', 'Pure', 'SuscoDealer','PTT', 'Bangchak', 'Shell', 'Esso', 'Caltrex',
+        'IRPC', 'PT', 'Susco', 'Pure', 'SuscoDealer','PTT', 'Bangchak', 'Shell', 'Esso', 'Caltrex',
+        'IRPC', 'PT', 'Susco', 'Pure', 'SuscoDealer','PTT', 'Bangchak', 'Shell', 'Esso', 'Caltrex',
+        'IRPC', 'PT', 'Susco', 'Pure', 'SuscoDealer','PTT', 'Bangchak', 'Shell', 'Esso', 'Caltrex',
+        'IRPC', 'PT', 'Susco', 'Pure', 'SuscoDealer']
 oilPrice = []
 
 for ol in todayprice:
@@ -40,10 +53,7 @@ for ol in todayprice:
 # print(type('Bangchak'))
 # print(oilDealer)
 
-# result = {}
-# for t,o in zip(oilDealer,oilPrice):
-#     result[t] = o
-# print(result)
+# print(oilType[0])
 
 
 result = {}
@@ -51,14 +61,6 @@ t = 0
 d = 0
 p = 0
 
-#print(result)
-
-# while(p<100):
-#     p += 1
-#     while(d<10):
-#         d += 1
-#         while(t<10):
-#             d += 1
 
 result = {oilType[0]: {oilDealer[0]: oilPrice[0], oilDealer[1]: oilPrice[1], oilDealer[2]: oilPrice[2], oilDealer[3]: oilPrice[3], oilDealer[4]: oilPrice[4], 
         oilDealer[5]: oilPrice[5], oilDealer[6]: oilPrice[6], oilDealer[7]: oilPrice[7], oilDealer[8]: oilPrice[8], oilDealer[9]: oilPrice[9]},
@@ -81,14 +83,43 @@ result = {oilType[0]: {oilDealer[0]: oilPrice[0], oilDealer[1]: oilPrice[1], oil
         oilType[9]: {oilDealer[0]: oilPrice[90], oilDealer[1]: oilPrice[91], oilDealer[2]: oilPrice[92], oilDealer[3]: oilPrice[93], oilDealer[4]: oilPrice[94],
         oilDealer[5]: oilPrice[95], oilDealer[6]: oilPrice[96], oilDealer[7]: oilPrice[97], oilDealer[8]: oilPrice[98], oilDealer[9]: oilPrice[99]}}
 
-print(result)
-# print(result.get("Gasoline95"))
+# print(result.get("GasoholE20"))
+# print(result.items())
+# print(result.values())
 
 # result2={}
 # result2 = {oilType[0]:{oilDealer[0]:oilPrice[0]}}
 
-
 # print(result2)
+
+# x=0
+# y=0
+# while(y<100):
+    # y += 1
+    # while(x<10):
+        # oilType2[x] = {oilDealer2[y]:oilPrice[y]}
+        # x += 1
+
+newResult = {}
+newResult = {oilType2[0]:{oilDealer2[0]:oilPrice[0]}}
+print(newResult)
+
+from songline import Sendline
+
+token = 'gcRCdottKStR05Fat7hNJBPNa4NniPK2Prw5NUoBM9q'
+
+messenger = Sendline(token)
+
+
+# messenger.sendtext(result.get("GasoholE20").items())
+# i=0
+# while(i<10):
+    # messenger.sendtext(oilType[i])
+    # messenger.sendtext(result.get(oilType[i],{}).items())
+    # i += 1
+
+# messenger.sticker(12,1)
+
 
 
 # os.system("taskkill /im chromedriver.exe") #kill chromedriver process to regain memory
