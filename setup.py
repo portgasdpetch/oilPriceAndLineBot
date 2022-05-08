@@ -264,8 +264,7 @@ print()
 def ReplyMessage(Reply_token, TextMessage, Line_Access_Token):
         LINE_API = 'https://api.line.me/v2/bot/messsage/reply'
 
-if __name__ == "__main__":
-    app.run()
+
 # messenger.sendtext(result.get("GasoholE20").items())
 # i=0
 # while(i<10):
@@ -283,6 +282,7 @@ while 1:
     schedule.run_pending()
     time.sleep(1)
 
-
+if __name__ == "__main__":
+    app.run()
 
 # os.system("taskkill /im chromedriver.exe") #kill chromedriver process to regain memory
