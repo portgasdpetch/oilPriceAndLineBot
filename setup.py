@@ -234,8 +234,6 @@ sendEachPrice()
 app = Flask(__name__)
 
 
-
-
 @app.route("/", methods=['POST'])
 def callback():
     # get X-Line-Signature header value
