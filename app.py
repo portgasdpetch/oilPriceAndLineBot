@@ -278,9 +278,9 @@ def ReplyMessage(Reply_token, TextMessage, Line_Access_Token):
 schedule.every().day.at("17:00").do(sendEachPrice)
 # line_bot_api.push_message('',TextSendMessage(sendEachPrice()))
 
-# while 1:
-#     schedule.run_pending()
-#     time.sleep(1)
+while 1:
+    schedule.run_pending()
+    time.sleep(1)
 
 if __name__ == "__main__":
     app.run()
