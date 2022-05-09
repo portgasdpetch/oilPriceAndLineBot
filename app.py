@@ -222,7 +222,7 @@ def sendEachPrice():
 line_bot_api = LineBotApi('PTbNtC5m+gVfsYzvhp8dBtjkUiwd8jxyv7kxS4RlJpNIunDdedUN0sNXZFtVIB9p0TdLZ5hc50Ax8WskZo3DTceVUBKmRZvVfgK7lR6GmDPDy194G+bjvSWhFru0j4qzC1yc0PK7DaLnPbT75oxR6gdB04t89/1O/w1cDnyilFU=')
 handler = WebhookHandler('15a350c50da2fc05413dda6fd9eff8f9')
 
-sendEachPrice()
+# sendEachPrice()
 # def job():
 #     print("I'm working...")
 
