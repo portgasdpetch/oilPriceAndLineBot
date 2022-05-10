@@ -1,5 +1,8 @@
+from asyncio import events
 from email import message
+from multiprocessing import Event
 from telnetlib import GA
+from unicodedata import decomposition
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import time
@@ -16,9 +19,10 @@ import sys
 import tempfile
 from argparse import ArgumentParser
 from flask import Flask, request, abort
+from uncleengineer import thaistock
 
 from linebot import (
-    LineBotApi, WebhookHandler
+    LineBotApi, WebhookHandler,WebhookPayload
 )
 from linebot.exceptions import (
     InvalidSignatureError
@@ -200,6 +204,7 @@ Date={"Date":Date}
 
 from songline import Sendline
 
+# line_notify_token
 token = 'gcRCdottKStR05Fat7hNJBPNa4NniPK2Prw5NUoBM9q'
 
 messenger = Sendline(token)
@@ -218,9 +223,12 @@ def sendEachPrice():
         messenger.sendtext(DieselB20.items())
         messenger.sendtext(DieselPremium.items())
 
+# line_bot_token
+lineBotApi = 'PTbNtC5m+gVfsYzvhp8dBtjkUiwd8jxyv7kxS4RlJpNIunDdedUN0sNXZFtVIB9p0TdLZ5hc50Ax8WskZo3DTceVUBKmRZvVfgK7lR6GmDPDy194G+bjvSWhFru0j4qzC1yc0PK7DaLnPbT75oxR6gdB04t89/1O/w1cDnyilFU='
+lineBotSecret = '15a350c50da2fc05413dda6fd9eff8f9'
 
-line_bot_api = LineBotApi('PTbNtC5m+gVfsYzvhp8dBtjkUiwd8jxyv7kxS4RlJpNIunDdedUN0sNXZFtVIB9p0TdLZ5hc50Ax8WskZo3DTceVUBKmRZvVfgK7lR6GmDPDy194G+bjvSWhFru0j4qzC1yc0PK7DaLnPbT75oxR6gdB04t89/1O/w1cDnyilFU=')
-handler = WebhookHandler('15a350c50da2fc05413dda6fd9eff8f9')
+line_bot_api = LineBotApi(lineBotApi)
+handler = WebhookHandler(lineBotSecret)
 
 # sendEachPrice()
 # def job():
@@ -242,6 +250,10 @@ def callback():
     # get request body as text
     body = request.get_data(as_text=True)
     app.logger.info("Request body: " + body)
+    payload = request.json
+    print(payload)
+    messageText = payload['events'][0]['message']['text'] 
+    print(messageText)
 
     # handle webhook body
     try:
@@ -255,14 +267,69 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text=event.message.text))
+        payload = request.json
+        messageText = payload['events'][0]['message']['text']       
+        if 'stock' in messageText :
+                line_bot_api.reply_message(event.reply_token,
+                TextSendMessage('ราคาหุ้น อิตาเลียนไทย ขณะนี้ : 0'))
+        else : 
+                line_bot_api.reply_message(event.reply_token,TextSendMessage(text=event.message.text))
+        
 
-print()
+
+@app.route('/webhook', methods=['POST','GET'])
+def webhook():
+    if request.method == 'POST':
+        payload = request.json
+        payload2 = payload["events"]
+
+        Reply_token = payload['events'][0]['replyToken']
+        print(Reply_token)
+        message = payload['events'][0]['message']['text']
+        print(message)
+        if 'stock' in message :
+            ITD = thaistock('ITD')
+            Reply_messasge = 'ราคาหุ้น อิตาเลียนไทย ขณะนี้ : {}'.format(ITD)
+            ReplyMessage(Reply_token,Reply_messasge,lineBotApi)
+        
+        # elif "btc" in message :
+        #     Reply_messasge = 'ราคา BITCOIN ขณะนี้ : {}'.format(GET_BTC_PRICE())
+        #     ReplyMessage(Reply_token,Reply_messasge,lineBotApi)
+
+
+        return request.json, 200
+
+    elif request.method == 'GET' :
+        return 'this is method GET!!!' , 200
+
+    else:
+        abort(400)
+
+@app.route('/',methods = ['GET'])
+def hello():
+    return 'hello world',200
 
 def ReplyMessage(Reply_token, TextMessage, Line_Access_Token):
         LINE_API = 'https://api.line.me/v2/bot/messsage/reply'
+
+        Authorization = 'Bearer {}'.format(lineBotApi)
+        print(Authorization)
+        headers = {
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Authorization':Authorization
+        }
+
+        data = {
+                "replyToken":Reply_token,
+                "messages":[{
+                        "type":"text",
+                        "text":TextMessage
+                }]
+        }
+
+        data = json.dumps(data) ## dump dict >> Json Object
+        r = requests.post(LINE_API, headers=headers, data=data)
+        return 200
 
 
 # messenger.sendtext(result.get("GasoholE20").items())
@@ -273,6 +340,9 @@ def ReplyMessage(Reply_token, TextMessage, Line_Access_Token):
 #     i += 1
 
 # messenger.sticker(12,1)
+
+# bot_info = line_bot_api.get_bot_info()
+# print(bot_info.user_id)
 
 
 schedule.every().day.at("17:00").do(sendEachPrice)
