@@ -203,6 +203,11 @@ while(z<100):
 Date={"Date":Date}
 # print(Date.copy())
 
+g95 = {}
+Gasohole95 = g95
+g95 = {Gasoline95.update(Gasohol95)}
+print(Gasoline95)
+print(g95)
 
 
 from songline import Sendline
@@ -253,6 +258,7 @@ def callback():
     # get request body as text
     body = request.get_data(as_text=True)
     app.logger.info("Request body: " + body)
+
     payload = request.json
     print(payload)
 
@@ -277,49 +283,53 @@ def callback():
 def handle_message(event):
         payload = request.json
         messageText = payload['events'][0]['message']['text']    
-        if '!e20' in messageText.lower():
+        if '!e20' in messageText.lower() or '!gasohole20' in messageText.lower():
                 jsonGasoholE20 = json.dumps(GasoholE20)
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(jsonGasoholE20))
-        elif '!e85' in messageText.lower() :
+        elif '!e85' in messageText.lower() or '!gasohole85' in messageText.lower() :
                 jsonGasoholE85 = json.dumps(GasoholE85)
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(jsonGasoholE85))
-        elif '!g95' in messageText.lower() :
-                g95 = {Gasoline95.update(Gasohol95)}
+        elif '!g95' in messageText.lower() or '!gas95' in messageText.lower():
+                g95 = Gasoline95
+                {g95.update(Gasohol95)}
                 jsonG95 = json.dumps(g95)
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(jsonG95))
-        elif '!g91' in messageText.lower() :
+        elif '!g91' in messageText.lower() or '!gasohol91' in messageText.lower() or '!gas91' in messageText.lower():
                 jsonGasohol91 = json.dumps(Gasohol91)
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(jsonGasohol91))
-        elif '!diesel' in messageText.lower() :
+        elif messageText.lower()=='!diesel' or messageText.lower()=='!d':
                 jsonDiesel = json.dumps(Diesel)
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(jsonDiesel))
-        elif '!b7' in messageText.lower():
+        elif '!dieselb7' in messageText.lower() or '!db7' in messageText.lower():
                 jsonDieselB7 = json.dumps(DieselB7)
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(jsonDieselB7))
-        elif '!b20' in messageText.lower():
+        elif '!dieselb20' in messageText.lower() or '!db20' in messageText.lower():
                 jsonDieselB20 = json.dumps(DieselB20)
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(jsonDieselB20))
-        elif '!dieselpremium' in messageText.lower():
+        elif '!dieselpremium' in messageText.lower() or '!dpremium' in messageText.lower():
                 jsonDieselPremium = json.dumps(DieselPremium)
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(jsonDieselPremium))
-        elif '!e10' in messageText.lower():
-                jsonGasohol95 = json.dumps(Gasohol95)
-                jsonGasohol91 = json.dumps(Gasohol91)
+        elif '!e10' in messageText.lower() or 'gasohole10' in messageText.lower():
+                e10 = Gasohol95
+                {e10.update(Gasohol91)}
+                jsonE10 = json.dmps(e10)
                 line_bot_api.reply_message(event.reply_token,
-                TextSendMessage(jsonGasohol95))
-                line_bot_api.reply_message(event.reply_token,
-                TextSendMessage(jsonGasohol91))
+                TextSendMessage(jsonE10))
         elif '!gasohol95' in messageText.lower():
                 jsonGasohol95 = json.dumps(Gasohol95)
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(jsonGasohol95))
+        elif '!gasoline95' in messageText.lower() or '!e0' in messageText.lower():
+                jsonGasoline95 = json.dumps(Gasoline95)
+                line_bot_api.reply_message(event.reply_token,
+                TextSendMessage(jsonGasoline95))
         else :
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(text=event.message.text))
         
