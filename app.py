@@ -1,5 +1,8 @@
 from asyncio import events
+from contextlib import AsyncContextDecorator
+from dataclasses import asdict
 from email import message
+from mmap import ACCESS_DEFAULT
 from multiprocessing import Event
 from telnetlib import GA
 from unicodedata import decomposition
@@ -252,8 +255,13 @@ def callback():
     app.logger.info("Request body: " + body)
     payload = request.json
     print(payload)
-    messageText = payload['events'][0]['message']['text'] 
-    print(messageText)
+
+    # make verification on LineDev to success when there is no event(verifying will send an empty event)
+    if (payload['events'])!=([]):
+        messageText = payload['events'][0]['message']['text'] 
+        print(messageText) 
+        #print(type(messageText))
+        #print(type(GasoholE20))
 
     # handle webhook body
     try:
@@ -268,11 +276,51 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
         payload = request.json
-        messageText = payload['events'][0]['message']['text']       
-        if 'stock' in messageText :
+        messageText = payload['events'][0]['message']['text']    
+        if '!e20' in messageText.lower():
+                jsonGasoholE20 = json.dumps(GasoholE20)
                 line_bot_api.reply_message(event.reply_token,
-                TextSendMessage('ราคาหุ้น อิตาเลียนไทย ขณะนี้ : 0'))
-        else : 
+                TextSendMessage(jsonGasoholE20))
+        elif '!e85' in messageText.lower() :
+                jsonGasoholE85 = json.dumps(GasoholE85)
+                line_bot_api.reply_message(event.reply_token,
+                TextSendMessage(jsonGasoholE85))
+        elif '!g95' in messageText.lower() :
+                g95 = {Gasoline95.update(Gasohol95)}
+                jsonG95 = json.dumps(g95)
+                line_bot_api.reply_message(event.reply_token,TextSendMessage(jsonG95))
+        elif '!g91' in messageText.lower() :
+                jsonGasohol91 = json.dumps(Gasohol91)
+                line_bot_api.reply_message(event.reply_token,
+                TextSendMessage(jsonGasohol91))
+        elif '!diesel' in messageText.lower() :
+                jsonDiesel = json.dumps(Diesel)
+                line_bot_api.reply_message(event.reply_token,
+                TextSendMessage(jsonDiesel))
+        elif '!b7' in messageText.lower():
+                jsonDieselB7 = json.dumps(DieselB7)
+                line_bot_api.reply_message(event.reply_token,
+                TextSendMessage(jsonDieselB7))
+        elif '!b20' in messageText.lower():
+                jsonDieselB20 = json.dumps(DieselB20)
+                line_bot_api.reply_message(event.reply_token,
+                TextSendMessage(jsonDieselB20))
+        elif '!dieselpremium' in messageText.lower():
+                jsonDieselPremium = json.dumps(DieselPremium)
+                line_bot_api.reply_message(event.reply_token,
+                TextSendMessage(jsonDieselPremium))
+        elif '!e10' in messageText.lower():
+                jsonGasohol95 = json.dumps(Gasohol95)
+                jsonGasohol91 = json.dumps(Gasohol91)
+                line_bot_api.reply_message(event.reply_token,
+                TextSendMessage(jsonGasohol95))
+                line_bot_api.reply_message(event.reply_token,
+                TextSendMessage(jsonGasohol91))
+        elif '!gasohol95' in messageText.lower():
+                jsonGasohol95 = json.dumps(Gasohol95)
+                line_bot_api.reply_message(event.reply_token,
+                TextSendMessage(jsonGasohol95))
+        else :
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(text=event.message.text))
         
 
@@ -346,6 +394,7 @@ def ReplyMessage(Reply_token, TextMessage, Line_Access_Token):
 
 
 schedule.every().day.at("17:00").do(sendEachPrice)
+schedule.every().day.at("05:00").do(sendEachPrice)
 # line_bot_api.push_message('',TextSendMessage(sendEachPrice()))
 
 # while 1:
