@@ -204,8 +204,8 @@ Date={"Date":Date}
 # print(Date.copy())
 
 g95 = {}
-Gasohole95 = g95
-g95 = {Gasoline95.update(Gasohol95)}
+g95 = Gasoline95.copy()
+g95.update(Gasohol95)
 print(Gasoline95)
 print(g95)
 
@@ -291,6 +291,7 @@ def handle_message(event):
                 jsonGasoholE85 = json.dumps(GasoholE85)
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(jsonGasoholE85))
+        #to be fixed
         elif '!g95' in messageText.lower() or '!gas95' in messageText.lower():
                 g95 = Gasoline95
                 {g95.update(Gasohol95)}
@@ -315,11 +316,12 @@ def handle_message(event):
         elif '!dieselpremium' in messageText.lower() or '!dpremium' in messageText.lower():
                 jsonDieselPremium = json.dumps(DieselPremium)
                 line_bot_api.reply_message(event.reply_token,
-                TextSendMessage(jsonDieselPremium))
+                TextSendMessage(jsonDieselPremium))        
+        #to be fixed
         elif '!e10' in messageText.lower() or 'gasohole10' in messageText.lower():
                 e10 = Gasohol95
                 {e10.update(Gasohol91)}
-                jsonE10 = json.dmps(e10)
+                jsonE10 = json.dumps(e10)
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(jsonE10))
         elif '!gasohol95' in messageText.lower():
