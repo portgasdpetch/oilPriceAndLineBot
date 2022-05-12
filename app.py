@@ -203,11 +203,11 @@ while(z<100):
 Date={"Date":Date}
 # print(Date.copy())
 
-g95 = {}
-g95 = Gasoline95.copy()
-g95.update(Gasohol95)
-print(Gasoline95)
-print(g95)
+# g95 = {}
+# g95 = Gasoline95.copy()
+# g95.update(Gasohol95)
+# print(Gasoline95)
+# print(g95)
 
 
 from songline import Sendline
@@ -264,10 +264,11 @@ def callback():
 
     # make verification on LineDev to success when there is no event(verifying will send an empty event)
     if (payload['events'])!=([]):
-        messageText = payload['events'][0]['message']['text'] 
-        print(messageText) 
-        #print(type(messageText))
-        #print(type(GasoholE20))
+        if(payload['events'][0]['message']):
+                messageText = payload['events'][0]['message']['text'] 
+                print(messageText) 
+                print(payload['events'][0]['message']['type'])
+                print(type(payload['events'][0]['message']['type']))
 
     # handle webhook body
     try:
@@ -293,7 +294,7 @@ def handle_message(event):
                 TextSendMessage(jsonGasoholE85))
         #to be fixed
         elif '!g95' in messageText.lower() or '!gas95' in messageText.lower():
-                g95 = Gasoline95
+                g95 = Gasoline95.copy()
                 {g95.update(Gasohol95)}
                 jsonG95 = json.dumps(g95)
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(jsonG95))
@@ -319,7 +320,7 @@ def handle_message(event):
                 TextSendMessage(jsonDieselPremium))        
         #to be fixed
         elif '!e10' in messageText.lower() or 'gasohole10' in messageText.lower():
-                e10 = Gasohol95
+                e10 = Gasohol95.copy()
                 {e10.update(Gasohol91)}
                 jsonE10 = json.dumps(e10)
                 line_bot_api.reply_message(event.reply_token,
@@ -332,6 +333,8 @@ def handle_message(event):
                 jsonGasoline95 = json.dumps(Gasoline95)
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(jsonGasoline95))
+        elif '!petch' in messageText.lower() or '!เพชร' in messageText:
+                line_bot_api.reply_message(event.reply_token,TextSendMessage("0198435805\nkbank\nThachchai Jantarawiwat"))
         else :
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(text=event.message.text))
         
@@ -407,11 +410,12 @@ def ReplyMessage(Reply_token, TextMessage, Line_Access_Token):
 
 schedule.every().day.at("17:00").do(sendEachPrice)
 schedule.every().day.at("05:00").do(sendEachPrice)
+schedule.every().day.at("17:15").do(sendEachPrice)
 # line_bot_api.push_message('',TextSendMessage(sendEachPrice()))
 
-# while 1:
-#     schedule.run_pending()
-#     time.sleep(1)
+while 1:
+     schedule.run_pending()
+     time.sleep(1)
 
 if __name__ == "__main__":
     app.run()
