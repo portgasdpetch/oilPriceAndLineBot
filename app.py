@@ -46,7 +46,7 @@ driver.get(url)  # open web
 # time.sleep(3)
 page_html = driver.page_source
 driver.close()
-driver.quit()  # turn off chomedriver console
+
 
 data = soup(page_html, 'html.parser')  # scan data
 table = data.findAll('div', {'class': 'div_oil_price'})
@@ -264,7 +264,7 @@ def callback():
 
     # make verification on LineDev to success when there is no event(verifying will send an empty event)
     if (payload['events'])!=([]):
-        if(payload['events'][0]['message']):
+        if(payload['events'][0]['message']['type']=='text'):
                 messageText = payload['events'][0]['message']['text'] 
                 print(messageText) 
                 print(payload['events'][0]['message']['type'])
@@ -292,7 +292,6 @@ def handle_message(event):
                 jsonGasoholE85 = json.dumps(GasoholE85)
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(jsonGasoholE85))
-        #to be fixed
         elif '!g95' in messageText.lower() or '!gas95' in messageText.lower():
                 g95 = Gasoline95.copy()
                 {g95.update(Gasohol95)}
@@ -318,7 +317,6 @@ def handle_message(event):
                 jsonDieselPremium = json.dumps(DieselPremium)
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(jsonDieselPremium))        
-        #to be fixed
         elif '!e10' in messageText.lower() or 'gasohole10' in messageText.lower():
                 e10 = Gasohol95.copy()
                 {e10.update(Gasohol91)}
@@ -335,6 +333,8 @@ def handle_message(event):
                 TextSendMessage(jsonGasoline95))
         elif '!petch' in messageText.lower() or '!เพชร' in messageText:
                 line_bot_api.reply_message(event.reply_token,TextSendMessage("0198435805\nkbank\nThachchai Jantarawiwat"))
+        elif '!ton' in messageText.lower() or '!ต้น' in messageText:
+                line_bot_api.reply_message(event.reply_token,TextSendMessage("0922616652\npromptpay\nSarannon Srinarongsuk"))
         else :
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(text=event.message.text))
         
@@ -413,11 +413,12 @@ schedule.every().day.at("05:00").do(sendEachPrice)
 schedule.every().day.at("17:15").do(sendEachPrice)
 # line_bot_api.push_message('',TextSendMessage(sendEachPrice()))
 
-while 1:
-     schedule.run_pending()
-     time.sleep(1)
+# while 1:
+#      schedule.run_pending()
+#      time.sleep(1)
 
 if __name__ == "__main__":
     app.run()
 
+driver.quit()  # turn off chomedriver console
 # os.system("taskkill /im chromedriver.exe") #kill chromedriver process to regain memory
