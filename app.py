@@ -380,9 +380,9 @@ schedule.every().day.at("05:00").do(sendEachPrice)
 schedule.every().day.at("17:15").do(sendEachPrice)
 # line_bot_api.push_message('',TextSendMessage(sendEachPrice()))
 
-while 1:
-        schedule.run_pending()
-        time.sleep(1500)
+# while 1:
+        # schedule.run_pending()
+        # time.sleep(1500)
 
 if __name__ == "__main__":
     app.run()
