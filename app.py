@@ -339,35 +339,6 @@ def handle_message(event):
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(text=event.message.text))
         
 
-
-@app.route('/webhook', methods=['POST','GET'])
-def webhook():
-    if request.method == 'POST':
-        payload = request.json
-        payload2 = payload["events"]
-
-        Reply_token = payload['events'][0]['replyToken']
-        print(Reply_token)
-        message = payload['events'][0]['message']['text']
-        print(message)
-        if 'stock' in message :
-            ITD = thaistock('ITD')
-            Reply_messasge = 'ราคาหุ้น อิตาเลียนไทย ขณะนี้ : {}'.format(ITD)
-            ReplyMessage(Reply_token,Reply_messasge,lineBotApi)
-        
-        # elif "btc" in message :
-        #     Reply_messasge = 'ราคา BITCOIN ขณะนี้ : {}'.format(GET_BTC_PRICE())
-        #     ReplyMessage(Reply_token,Reply_messasge,lineBotApi)
-
-
-        return request.json, 200
-
-    elif request.method == 'GET' :
-        return 'this is method GET!!!' , 200
-
-    else:
-        abort(400)
-
 @app.route('/',methods = ['GET'])
 def hello():
     return 'hello world',200
