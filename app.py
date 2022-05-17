@@ -378,7 +378,6 @@ def ReplyMessage(Reply_token, TextMessage, Line_Access_Token):
 schedule.every().day.at("17:00").do(sendEachPrice)
 schedule.every().day.at("05:00").do(sendEachPrice)
 schedule.every().day.at("17:15").do(sendEachPrice)
-schedule.every(3).seconds.do(sendEachPrice)
 # line_bot_api.push_message('',TextSendMessage(sendEachPrice()))
 
 while 1:
