@@ -295,7 +295,7 @@ def handle_message(event):
                 {g95.update(Gasohol95)}
                 jsonG95 = json.dumps(g95)
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(jsonG95))
-        elif '!g91' in messageText.lower() or '!gasohol91' in messageText.lower() or '!gas91' in messageText.lower():
+        elif '!g91' in messageText.lower() or '!gasohol91' in messageText.lower() or '!gas91' in messageText.lower() or '!91' in messageText.lower():
                 jsonGasohol91 = json.dumps(Gasohol91)
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(jsonGasohol91))
@@ -321,7 +321,7 @@ def handle_message(event):
                 jsonE10 = json.dumps(e10)
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(jsonE10))
-        elif '!gasohol95' in messageText.lower():
+        elif '!gasohol95' in messageText.lower() or '!95' in messageText.lower():
                 jsonGasohol95 = json.dumps(Gasohol95)
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(jsonGasohol95))
@@ -333,8 +333,6 @@ def handle_message(event):
                 line_bot_api.reply_message(event.reply_token,TextSendMessage("0198435805\nkbank\nThachchai Jantarawiwat"))
         elif '!ton' in messageText.lower() or '!ต้น' in messageText:
                 line_bot_api.reply_message(event.reply_token,TextSendMessage("0922616652\npromptpay\nSarannon Srinarongsuk"))
-        else :
-                line_bot_api.reply_message(event.reply_token,TextSendMessage(text=event.message.text))
         
 
 @app.route('/',methods = ['GET'])
@@ -380,11 +378,12 @@ def ReplyMessage(Reply_token, TextMessage, Line_Access_Token):
 schedule.every().day.at("17:00").do(sendEachPrice)
 schedule.every().day.at("05:00").do(sendEachPrice)
 schedule.every().day.at("17:15").do(sendEachPrice)
+schedule.every(3).seconds.do(sendEachPrice)
 # line_bot_api.push_message('',TextSendMessage(sendEachPrice()))
 
-# while 1:
-#      schedule.run_pending()
-#      time.sleep(1)
+while 1:
+     schedule.run_pending()
+     time.sleep(1)
 
 if __name__ == "__main__":
     app.run()
