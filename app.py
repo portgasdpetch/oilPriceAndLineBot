@@ -383,6 +383,7 @@ schedule.every().day.at("17:15").do(sendEachPrice)
 # while 1:
         # schedule.run_pending()
         # time.sleep(1500)
+        
 
 if __name__ == "__main__":
     app.run()
