@@ -22,8 +22,6 @@ import sys
 import tempfile
 from argparse import ArgumentParser
 from flask import Flask, request, abort
-from uncleengineer import thaistock
-
 from linebot import (
     LineBotApi, WebhookHandler,WebhookPayload
 )
