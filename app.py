@@ -20,6 +20,7 @@ import errno
 import os
 import sys
 import tempfile
+import threading
 from argparse import ArgumentParser
 from flask import Flask, request, abort
 from linebot import (
@@ -333,6 +334,18 @@ def handle_message(event):
                 line_bot_api.reply_message(event.reply_token,TextSendMessage("0198435805\nkbank\nThachchai Jantarawiwat"))
         elif '!ton' in messageText.lower() or '!ต้น' in messageText:
                 line_bot_api.reply_message(event.reply_token,TextSendMessage("0922616652\npromptpay\nSarannon Srinarongsuk"))
+        elif '!toy' in messageText.lower() or '!ทอย' in messageText:
+                line_bot_api.reply_message(event.reply_token,TextSendMessage("2242567291\nTTB\nChutikarn Khampee"))
+        elif '!jame' in messageText.lower() or '!เจม' in messageText:
+                line_bot_api.reply_message(event.reply_token,TextSendMessage("0273461043\nTTB\nChaiyanat Noodang"))
+        elif '!poat' in messageText.lower() or '!โป๊ต' in messageText:
+                line_bot_api.reply_message(event.reply_token,TextSendMessage("0018398265\nkbank\nNarathip Thongprathun"))
+        elif '!bell' in messageText.lower() or '!เบล' in messageText:
+                line_bot_api.reply_message(event.reply_token,TextSendMessage("4300831278\nSCB\nNoppon Meta-awirutruedee"))
+        elif '!mon' in messageText.lower() or '!มน' in messageText:
+                line_bot_api.reply_message(event.reply_token,TextSendMessage("0880203451\npromptpay\nPongsakorn Isarapatthanakul"))
+        elif '!help' in messageText.lower():
+                line_bot_api.reply_message(event.reply_token,TextSendMessage("พิมพ์ '!<ชื่อคน>' ที่ต้องการเพื่อแสดงเลขบัญชี เช่น '!มน' หรือ '!petch'"))
         
 
 @app.route('/',methods = ['GET'])
@@ -374,10 +387,39 @@ def ReplyMessage(Reply_token, TextMessage, Line_Access_Token):
 # bot_info = line_bot_api.get_bot_info()
 # print(bot_info.user_id)
 
+def run_continuously(interval=1):
+    """Continuously run, while executing pending jobs at each
+    elapsed time interval.
+    @return cease_continuous_run: threading. Event which can
+    be set to cease continuous run. Please note that it is
+    *intended behavior that run_continuously() does not run
+    missed jobs*. For example, if you've registered a job that
+    should run every minute and you set a continuous run
+    interval of one hour then your job won't be run 60 times
+    at each interval but only once.
+    """
+    cease_continuous_run = threading.Event()
+
+    class ScheduleThread(threading.Thread):
+        @classmethod
+        def run(cls):
+            while not cease_continuous_run.is_set():
+                schedule.run_pending()
+                time.sleep(interval)
+
+    continuous_thread = ScheduleThread()
+    continuous_thread.start()
+    return cease_continuous_run
 
 schedule.every().day.at("17:00").do(sendEachPrice)
 schedule.every().day.at("05:00").do(sendEachPrice)
 schedule.every().day.at("17:15").do(sendEachPrice)
+
+# Start the background thread
+stop_run_continuously = run_continuously()
+
+#schedule.every().day.at("17:00").do(sendEachPrice)
+
 # line_bot_api.push_message('',TextSendMessage(sendEachPrice()))
 
 # while 1:
