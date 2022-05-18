@@ -337,7 +337,7 @@ def handle_message(event):
         elif '!toy' in messageText.lower() or '!ทอย' in messageText:
                 line_bot_api.reply_message(event.reply_token,TextSendMessage("2242567291\nTTB\nChutikarn Khampee"))
         elif '!jame' in messageText.lower() or '!เจม' in messageText:
-                line_bot_api.reply_message(event.reply_token,TextSendMessage("0273461043\nTTB\nChaiyanat Noodang"))
+                line_bot_api.reply_message(event.reply_token,TextSendMessage("0273461043\nkbank\nChaiyanat Noodang"))
         elif '!poat' in messageText.lower() or '!โป๊ต' in messageText:
                 line_bot_api.reply_message(event.reply_token,TextSendMessage("0018398265\nkbank\nNarathip Thongprathun"))
         elif '!bell' in messageText.lower() or '!เบล' in messageText:
