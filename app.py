@@ -268,6 +268,7 @@ tar_display_name = profileTar.display_name
 def handle_message(event):
         payload = request.json
         messageText = payload['events'][0]['message']['text']    
+        petch = "0198435805\nkbank\nThachchai Jantarawiwat"
         if '!e20' in messageText.lower() or '!gasohole20' in messageText.lower():
                 jsonGasoholE20 = json.dumps(GasoholE20)
                 line_bot_api.reply_message(event.reply_token,
@@ -334,8 +335,7 @@ def handle_message(event):
                 {getAll.update(DieselPremium)}
                 jsonGetAll = json.dumps(getAll)
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(jsonGetAll))
-        elif '!petch' in messageText.lower() or '!เพชร' in messageText or '@'+petch_display_name+' ขอเลข' in messageText:
-                petch = "0198435805\nkbank\nThachchai Jantarawiwat"
+        elif '!petch' in messageText.lower() or '!เพชร' in messageText or '@'+petch_display_name+' ขอเลข' in messageText:                
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(petch))
         elif '!ton' in messageText.lower() or '!ต้น' in messageText:
                 line_bot_api.reply_message(event.reply_token,TextSendMessage("0922616652\npromptpay\nSarannon Srinarongsuk"))
@@ -357,11 +357,15 @@ def handle_message(event):
                 line_bot_api.reply_message(event.reply_token,TextSendMessage("0944412122\npromptpay\nChanin Taweeluthikunchai"))
         elif '!help' in messageText.lower():
                 line_bot_api.reply_message(event.reply_token,TextSendMessage("พิมพ์ '!<ชื่อคน>' ที่ต้องการเพื่อแสดงเลขบัญชี เช่น !มน หรือ !petch"))
-        # elif '!edit_petch_' in messageText.lower():
-                # petch = messageText.replace("!edit_petch_","")
-                # print(petch)
-                # return petch
-        
+        elif '!edit_petch_' in messageText.lower():
+                edit_account()
+
+def edit_account():
+        payload = request.json
+        messageText = payload['events'][0]['message']['text'] 
+        petch = messageText.replace("!edit_petch_","")
+        print(petch)
+        return petch
 
 @app.route('/',methods = ['GET'])
 def hello():
