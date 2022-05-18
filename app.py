@@ -51,8 +51,6 @@ todayprice = table[0].findAll('div', {'class': 'oil_price_colum'})
 
 oilType = ('Gasoline95', 'Gasohol95', 'Gasohol91', 'GasoholE20',
         'GasoholE85', 'DieselB7', 'Diesel', 'DieselB20', 'B7PremiumDiesel', 'Date')
-oilType2 = ['Gasoline95', 'Gasohol95', 'Gasohol91', 'GasoholE20',
-        'GasoholE85', 'DieselB7', 'Diesel', 'DieselB20', 'B7PremiumDiesel', 'Date']
 oilDealer = ('PTT', 'Bangchak', 'Shell', 'Esso', 'Caltrex',
         'IRPC', 'PT', 'Susco', 'Pure', 'SuscoDealer')
 oilPrice = []
@@ -71,12 +69,12 @@ DieselB20 = {}
 DieselPremium = {}
 Date = {}
 
-Gasoline95 = {oilType2[0]:{oilDealer[0]:oilPrice[0],oilDealer[1]:oilPrice[1],oilDealer[2]:oilPrice[2],oilDealer[3]:oilPrice[3],oilDealer[4]:oilPrice[4],oilDealer[5]:oilPrice[5]
+Gasoline95 = {oilType[0]:{oilDealer[0]:oilPrice[0],oilDealer[1]:oilPrice[1],oilDealer[2]:oilPrice[2],oilDealer[3]:oilPrice[3],oilDealer[4]:oilPrice[4],oilDealer[5]:oilPrice[5]
 ,oilDealer[6]:oilPrice[6],oilDealer[7]:oilPrice[7],oilDealer[8]:oilPrice[8],oilDealer[9]:oilPrice[9]}}
 # print(Gasoline95.copy())
 
         
-Gasohol95 = {oilType2[1]:{oilDealer[0]:oilPrice[10],oilDealer[1]:oilPrice[11],oilDealer[2]:oilPrice[12],oilDealer[3]:oilPrice[13],oilDealer[4]:oilPrice[14],oilDealer[5]:oilPrice[15]
+Gasohol95 = {oilType[1]:{oilDealer[0]:oilPrice[10],oilDealer[1]:oilPrice[11],oilDealer[2]:oilPrice[12],oilDealer[3]:oilPrice[13],oilDealer[4]:oilPrice[14],oilDealer[5]:oilPrice[15]
 ,oilDealer[6]:oilPrice[16],oilDealer[7]:oilPrice[17],oilDealer[8]:oilPrice[18],oilDealer[9]:oilPrice[19]}}
 # print(Gasohol95.copy())
 
@@ -261,11 +259,10 @@ def callback():
 #Petch's profile
 profilePetch = line_bot_api.get_profile('U549838cc9a6ab9747c837176294e02c4')
 petch_display_name = profilePetch.display_name
+
 #Tar's profile
 profileTar = line_bot_api.get_group_member_profile('C1e51478d951eb26967b2ebc7402002fa', 'U29a01915d9a1ef87954b227582cd37ce')
-# print(profile.display_name)
-print(profileTar.user_id)
-print(profileTar.picture_url)
+tar_display_name = profileTar.display_name
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
@@ -300,7 +297,7 @@ def handle_message(event):
                 jsonDieselB20 = json.dumps(DieselB20)
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(jsonDieselB20))
-        elif '!dieselpremium' in messageText.lower() or '!dpremium' in messageText.lower():
+        elif '!dieselpremium' in messageText.lower() or '!dp' in messageText.lower():
                 jsonDieselPremium = json.dumps(DieselPremium)
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(jsonDieselPremium))        
@@ -352,7 +349,7 @@ def handle_message(event):
                 line_bot_api.reply_message(event.reply_token,TextSendMessage("4300831278\nSCB\nNoppon Meta-awirutruedee"))
         elif '!mon' in messageText.lower() or '!มน' in messageText:
                 line_bot_api.reply_message(event.reply_token,TextSendMessage("0880203451\npromptpay\nPongsakorn Isarapatthanakul"))
-        elif '!tar' in messageText.lower() or '!ต้า' in messageText:
+        elif '!tar' in messageText.lower() or '!ต้า' in messageText or '@'+tar_display_name+' ขอเลข' in messageText:
                 line_bot_api.reply_message(event.reply_token,TextSendMessage("0802805977\npromptpay\nPatchamon Monwimonporn"))
         elif '!fai' in messageText.lower() or '!ฝ้าย' in messageText:
                 line_bot_api.reply_message(event.reply_token,TextSendMessage("0658068512\nkbank\nNalinee Boonrueng"))
