@@ -1,1 +1,1 @@
-web: newrelic-admin run-program gunicorn app:app --timeout 1600
+web: newrelic-admin run-program gunicorn app:app 

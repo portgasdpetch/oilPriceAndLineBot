@@ -237,6 +237,33 @@ lineBotSecret = '15a350c50da2fc05413dda6fd9eff8f9'
 line_bot_api = LineBotApi(lineBotApi)
 handler = WebhookHandler(lineBotSecret)
 
+def run_continuously(interval=1):
+    """Continuously run, while executing pending jobs at each
+    elapsed time interval.
+    @return cease_continuous_run: threading. Event which can
+    be set to cease continuous run. Please note that it is
+    *intended behavior that run_continuously() does not run
+    missed jobs*. For example, if you've registered a job that
+    should run every minute and you set a continuous run
+    interval of one hour then your job won't be run 60 times
+    at each interval but only once.
+    """
+    cease_continuous_run = threading.Event()
+
+    class ScheduleThread(threading.Thread):
+        @classmethod
+        def run(cls):
+            while not cease_continuous_run.is_set():
+                schedule.run_pending()
+                time.sleep(interval)
+
+    continuous_thread = ScheduleThread()
+    continuous_thread.start()
+    return cease_continuous_run
+
+schedule.every().day.at("17:00").do(sendEachPrice)
+schedule.every().day.at("05:00").do(sendEachPrice)
+schedule.every().day.at("17:15").do(sendEachPrice)
 # sendEachPrice()
 # def job():
 #     print("I'm working...")
@@ -330,8 +357,28 @@ def handle_message(event):
                 jsonGasoline95 = json.dumps(Gasoline95)
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(jsonGasoline95))
+        elif '!getall' in messageText.lower():
+                getAll = Gasoline95.copy()
+                {getAll.update(Gasohol95)}
+                getAll = getAll.copy()
+                {getAll.update(Gasohol91)}
+                getAll = getAll.copy()
+                {getAll.update(GasoholE20)}
+                getAll = getAll.copy()
+                {getAll.update(GasoholE85)}
+                getAll = getAll.copy()
+                {getAll.update(Diesel)}
+                getAll = getAll.copy()
+                {getAll.update(DieselB7)}
+                getAll = getAll.copy()
+                {getAll.update(DieselB20)}
+                getAll = getAll.copy()
+                {getAll.update(DieselPremium)}
+                jsonGetAll = json.dumps(getAll)
+                line_bot_api.reply_message(event.reply_token,TextSendMessage(jsonGetAll))
         elif '!petch' in messageText.lower() or '!เพชร' in messageText:
-                line_bot_api.reply_message(event.reply_token,TextSendMessage("0198435805\nkbank\nThachchai Jantarawiwat"))
+                petch = "0198435805\nkbank\nThachchai Jantarawiwat"
+                line_bot_api.reply_message(event.reply_token,TextSendMessage(petch))
         elif '!ton' in messageText.lower() or '!ต้น' in messageText:
                 line_bot_api.reply_message(event.reply_token,TextSendMessage("0922616652\npromptpay\nSarannon Srinarongsuk"))
         elif '!toy' in messageText.lower() or '!ทอย' in messageText:
@@ -352,6 +399,10 @@ def handle_message(event):
                 line_bot_api.reply_message(event.reply_token,TextSendMessage("0944412122\npromptpay\nChanin Taweeluthikunchai"))
         elif '!help' in messageText.lower():
                 line_bot_api.reply_message(event.reply_token,TextSendMessage("พิมพ์ '!<ชื่อคน>' ที่ต้องการเพื่อแสดงเลขบัญชี เช่น !มน หรือ !petch"))
+        # elif '!edit_petch_' in messageText.lower():
+                # petch = messageText.replace("!edit_petch_","")
+                # print(petch)
+                # return petch
         
 
 @app.route('/',methods = ['GET'])
@@ -392,34 +443,6 @@ def ReplyMessage(Reply_token, TextMessage, Line_Access_Token):
 
 # bot_info = line_bot_api.get_bot_info()
 # print(bot_info.user_id)
-
-def run_continuously(interval=1):
-    """Continuously run, while executing pending jobs at each
-    elapsed time interval.
-    @return cease_continuous_run: threading. Event which can
-    be set to cease continuous run. Please note that it is
-    *intended behavior that run_continuously() does not run
-    missed jobs*. For example, if you've registered a job that
-    should run every minute and you set a continuous run
-    interval of one hour then your job won't be run 60 times
-    at each interval but only once.
-    """
-    cease_continuous_run = threading.Event()
-
-    class ScheduleThread(threading.Thread):
-        @classmethod
-        def run(cls):
-            while not cease_continuous_run.is_set():
-                schedule.run_pending()
-                time.sleep(interval)
-
-    continuous_thread = ScheduleThread()
-    continuous_thread.start()
-    return cease_continuous_run
-
-schedule.every().day.at("17:00").do(sendEachPrice)
-schedule.every().day.at("05:00").do(sendEachPrice)
-schedule.every().day.at("17:15").do(sendEachPrice)
 
 # Start the background thread
 stop_run_continuously = run_continuously()
