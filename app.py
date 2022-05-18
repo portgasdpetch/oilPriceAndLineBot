@@ -261,9 +261,16 @@ def run_continuously(interval=1):
     continuous_thread.start()
     return cease_continuous_run
 
-schedule.every().day.at("17:00").do(sendEachPrice)
-schedule.every().day.at("05:00").do(sendEachPrice)
-schedule.every().day.at("17:15").do(sendEachPrice)
+#Local Server or Thai time zone
+#schedule.every().day.at("17:00").do(sendEachPrice)
+#schedule.every().day.at("05:00").do(sendEachPrice)
+#schedule.every().day.at("17:15").do(sendEachPrice)
+
+#For Heroku Server (timezone)
+schedule.every().day.at("00:00").do(sendEachPrice)
+schedule.every().day.at("12:00").do(sendEachPrice)
+schedule.every().day.at("00:15").do(sendEachPrice)
+
 # sendEachPrice()
 # def job():
 #     print("I'm working...")
