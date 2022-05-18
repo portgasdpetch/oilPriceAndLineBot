@@ -258,6 +258,14 @@ def callback():
 
     return 'OK'
 
+#Petch's profile
+profilePetch = line_bot_api.get_profile('U549838cc9a6ab9747c837176294e02c4')
+petch_display_name = profilePetch.display_name
+#Tar's profile
+profileTar = line_bot_api.get_group_member_profile('C1e51478d951eb26967b2ebc7402002fa', 'U29a01915d9a1ef87954b227582cd37ce')
+# print(profile.display_name)
+print(profileTar.user_id)
+print(profileTar.picture_url)
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
@@ -329,7 +337,7 @@ def handle_message(event):
                 {getAll.update(DieselPremium)}
                 jsonGetAll = json.dumps(getAll)
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(jsonGetAll))
-        elif '!petch' in messageText.lower() or '!เพชร' in messageText:
+        elif '!petch' in messageText.lower() or '!เพชร' in messageText or '@'+petch_display_name+' ขอเลข' in messageText:
                 petch = "0198435805\nkbank\nThachchai Jantarawiwat"
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(petch))
         elif '!ton' in messageText.lower() or '!ต้น' in messageText:
@@ -361,28 +369,6 @@ def handle_message(event):
 @app.route('/',methods = ['GET'])
 def hello():
     return 'hello world',200
-
-def ReplyMessage(Reply_token, TextMessage, Line_Access_Token):
-        LINE_API = 'https://api.line.me/v2/bot/messsage/reply'
-
-        Authorization = 'Bearer {}'.format(lineBotApi)
-        print(Authorization)
-        headers = {
-                'Content-Type': 'application/json; charset=UTF-8',
-                'Authorization':Authorization
-        }
-
-        data = {
-                "replyToken":Reply_token,
-                "messages":[{
-                        "type":"text",
-                        "text":TextMessage
-                }]
-        }
-
-        data = json.dumps(data) ## dump dict >> Json Object
-        r = requests.post(LINE_API, headers=headers, data=data)
-        return 200
 
 # while 1:
         # schedule.run_pending()
