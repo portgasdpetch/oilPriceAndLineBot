@@ -371,8 +371,6 @@ def edit_petch():
         messageText = payload['events'][0]['message']['text']
         global petch
         petch = messageText.replace("!edit_petch_","")
-        print(petch)
-        print(type(petch))
         return petch
 
 @app.route('/',methods = ['GET'])
