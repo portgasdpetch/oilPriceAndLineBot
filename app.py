@@ -153,6 +153,10 @@ while(z<100):
 Date={"Date":Date}
 # print(Date.copy())
 
+petch = ""
+if petch=="":
+        petch = "0198435805\nkbank\nThachchai Jantarawiwat"
+
 from songline import Sendline
 
 # line_notify_token
@@ -268,7 +272,7 @@ tar_display_name = profileTar.display_name
 def handle_message(event):
         payload = request.json
         messageText = payload['events'][0]['message']['text']    
-        petch = "0198435805\nkbank\nThachchai Jantarawiwat"
+        
         if '!e20' in messageText.lower() or '!gasohole20' in messageText.lower():
                 jsonGasoholE20 = json.dumps(GasoholE20)
                 line_bot_api.reply_message(event.reply_token,
@@ -358,13 +362,17 @@ def handle_message(event):
         elif '!help' in messageText.lower():
                 line_bot_api.reply_message(event.reply_token,TextSendMessage("พิมพ์ '!<ชื่อคน>' ที่ต้องการเพื่อแสดงเลขบัญชี เช่น !มน หรือ !petch"))
         elif '!edit_petch_' in messageText.lower():
-                edit_account()
+                edit_petch()
+                line_bot_api.reply_message(event.reply_token,
+                TextSendMessage("edit successfully!"))
 
-def edit_account():
+def edit_petch():
         payload = request.json
-        messageText = payload['events'][0]['message']['text'] 
+        messageText = payload['events'][0]['message']['text']
+        global petch
         petch = messageText.replace("!edit_petch_","")
         print(petch)
+        print(type(petch))
         return petch
 
 @app.route('/',methods = ['GET'])
