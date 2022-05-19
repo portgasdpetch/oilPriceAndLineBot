@@ -273,7 +273,10 @@ def handle_message(event):
         payload = request.json
         messageText = payload['events'][0]['message']['text']    
         
-        if '!e20' in messageText.lower() or '!gasohole20' in messageText.lower():
+        if '!heroku' in messageText.lower():
+                line_bot_api.reply_message(event.reply_token,
+                TextSendMessage('https://fathomless-garden-59642.herokuapp.com/callback'))
+        elif '!e20' in messageText.lower() or '!gasohole20' in messageText.lower():
                 jsonGasoholE20 = json.dumps(GasoholE20)
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(jsonGasoholE20))
@@ -360,7 +363,15 @@ def handle_message(event):
         elif '!que' in messageText.lower() or 'คิว' in messageText:
                 line_bot_api.reply_message(event.reply_token,TextSendMessage("0944412122\npromptpay\nChanin Taweeluthikunchai"))
         elif '!help' in messageText.lower():
-                line_bot_api.reply_message(event.reply_token,TextSendMessage("พิมพ์ '!<ชื่อคน>' ที่ต้องการเพื่อแสดงเลขบัญชี เช่น !มน หรือ !petch"))
+                line_bot_api.reply_message(event.reply_token,
+                TextSendMessage("'!account_help\n!gas_help\n!edit_help"))     
+        elif '!account_help' in messageText.lower():
+                line_bot_api.reply_message(event.reply_token,
+                TextSendMessage("พิมพ์ '!<ชื่อคน>' ที่ต้องการเพื่อแสดงเลขบัญชี เช่น !มน หรือ !petch"))
+        elif '!account_help' in messageText.lower():
+                line_bot_api.reply_message(event.reply_token,
+                TextSendMessage("พิมพ์ '!<ชื่อคน>' ที่ต้องการเพื่อแสดงเลขบัญชี เช่น !มน หรือ !petch"))
+
         elif '!edit_petch_' in messageText.lower():
                 edit_petch()
                 line_bot_api.reply_message(event.reply_token,
