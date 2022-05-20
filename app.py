@@ -215,13 +215,16 @@ def run_continuously(interval=1):
 #schedule.every().day.at("17:15").do(sendEachPrice)
 
 #For Heroku Server (timezone)
+schedule.every().day.at("10:00").do(sendEachPrice)
+
 schedule.every().day.at("00:00").do(sendEachPrice)
-schedule.every().day.at("12:00").do(sendEachPrice)
-schedule.every().day.at("00:15").do(sendEachPrice)
+
+schedule.every().day.at("10:15").do(sendEachPrice)
 
 # Start the background thread
 stop_run_continuously = run_continuously()
 
+sendEachPrice()
 
 # schedule.every(3).seconds.do(job)
 # schedule.every(10).minutes.do(job)
@@ -368,10 +371,12 @@ def handle_message(event):
         elif '!account_help' in messageText.lower():
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage("พิมพ์ '!<ชื่อคน>' ที่ต้องการเพื่อแสดงเลขบัญชี เช่น !มน หรือ !petch"))
-        elif '!account_help' in messageText.lower():
+        elif '!gas_help' in messageText.lower():
                 line_bot_api.reply_message(event.reply_token,
-                TextSendMessage("พิมพ์ '!<ชื่อคน>' ที่ต้องการเพื่อแสดงเลขบัญชี เช่น !มน หรือ !petch"))
-
+                TextSendMessage("พิมพ์ '!<ชื่อน้ำมัน>' ที่ต้องการเพื่อแสดงราคาของแต่ละปั๊ม เช่น !e20 หรือ !91 หรือ !diesel"))
+        elif '!edit_help' in messageText.lower():
+                line_bot_api.reply_message(event.reply_token,
+                TextSendMessage("พิมพ์ '!edit_<ชื่อคน>_' ที่ต้องการเพื่อทำการแก้ไขข้อมูลที่จะแสดง เช่น !มน หรือ !petch"))
         elif '!edit_petch_' in messageText.lower():
                 edit_petch()
                 line_bot_api.reply_message(event.reply_token,
