@@ -215,16 +215,15 @@ def run_continuously(interval=1):
 #schedule.every().day.at("17:15").do(sendEachPrice)
 
 #For Heroku Server (timezone)
-schedule.every().day.at("10:00").do(sendEachPrice)
-
 schedule.every().day.at("00:00").do(sendEachPrice)
 
 schedule.every().day.at("10:15").do(sendEachPrice)
 
+schedule.every().minute.do(sendEachPrice)
+sendEachPrice()
 # Start the background thread
 stop_run_continuously = run_continuously()
 
-sendEachPrice()
 
 # schedule.every(3).seconds.do(job)
 # schedule.every(10).minutes.do(job)
@@ -279,6 +278,10 @@ def handle_message(event):
         if '!heroku' in messageText.lower():
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage('https://fathomless-garden-59642.herokuapp.com/callback'))
+        elif '!date' in messageText.lower():
+                jsonDate = json.dumps(Date)
+                line_bot_api.reply_message(event.reply_token,
+                TextSendMessage(jsonDate))
         elif '!e20' in messageText.lower() or '!gasohole20' in messageText.lower():
                 jsonGasoholE20 = json.dumps(GasoholE20)
                 line_bot_api.reply_message(event.reply_token,
@@ -300,15 +303,15 @@ def handle_message(event):
                 jsonDiesel = json.dumps(Diesel)
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(jsonDiesel))
-        elif '!dieselb7' in messageText.lower() or '!db7' in messageText.lower():
+        elif '!dieselb7' in messageText.lower() or '!db7' in messageText.lower() or '!b7' in messageText.lower():
                 jsonDieselB7 = json.dumps(DieselB7)
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(jsonDieselB7))
-        elif '!dieselb20' in messageText.lower() or '!db20' in messageText.lower():
+        elif '!dieselb20' in messageText.lower() or '!db20' in messageText.lower() or '!b20' in messageText.lower(): 
                 jsonDieselB20 = json.dumps(DieselB20)
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(jsonDieselB20))
-        elif '!dieselpremium' in messageText.lower() or '!dp' in messageText.lower():
+        elif '!dieselpremium' in messageText.lower() or '!dp' in messageText.lower(): 
                 jsonDieselPremium = json.dumps(DieselPremium)
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(jsonDieselPremium))        
@@ -376,18 +379,21 @@ def handle_message(event):
                 TextSendMessage("พิมพ์ '!<ชื่อน้ำมัน>' ที่ต้องการเพื่อแสดงราคาของแต่ละปั๊ม เช่น !e20 หรือ !91 หรือ !diesel"))
         elif '!edit_help' in messageText.lower():
                 line_bot_api.reply_message(event.reply_token,
-                TextSendMessage("พิมพ์ '!edit_<ชื่อคน>_' ที่ต้องการเพื่อทำการแก้ไขข้อมูลที่จะแสดง เช่น !มน หรือ !petch"))
-        elif '!edit_petch_' in messageText.lower():
+                TextSendMessage("พิมพ์ '!edit_<ชื่อคน>_<ข้อมูล>' ที่ต้องการเพื่อทำการแก้ไขข้อมูลที่จะแสดง เช่น !edit_มน_0880203451 หรือ !petch"))
+        elif '!edit_petch_' in messageText.lower() or '!edit_เพชร_' in messageText.lower():
                 edit_petch()
                 line_bot_api.reply_message(event.reply_token,
-                TextSendMessage("edit successfully!"))
+                TextSendMessage(editmessage))
 
 def edit_petch():
         payload = request.json
         messageText = payload['events'][0]['message']['text']
         global petch
+        global editmessage
         petch = messageText.replace("!edit_petch_","")
-        return petch
+        editmessage = "edit successfully!"
+        return petch,editmessage
+        
 
 @app.route('/',methods = ['GET'])
 def hello():
