@@ -219,7 +219,6 @@ schedule.every().day.at("00:00").do(sendEachPrice)
 
 schedule.every().day.at("10:15").do(sendEachPrice)
 
-schedule.every().minute.do(sendEachPrice)
 sendEachPrice()
 # Start the background thread
 stop_run_continuously = run_continuously()
