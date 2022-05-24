@@ -153,10 +153,8 @@ while(z<100):
 Date={"Date":Date}
 # print(Date.copy())
 
-global name
-name = {}
-global petch
-global account_data
+
+name = ""
 account_data = ""
 petch = ""
 if petch=="":
@@ -405,24 +403,28 @@ def handle_message(event):
         #         line_bot_api.reply_message(event.reply_token,
         #         TextSendMessage(editObject))
         elif '!edit_'+name+'_' in messageText.lower():
-                edit_data()
+                edit_data(name)
                 line_bot_api.reply_message(event.reply_token,
-                TextSendMessage(editObject))
+                TextSendMessage(editResponse))
         elif '!add_' in messageText.lower():
                 add_name()
                 line_bot_api.reply_message(event.reply_token,
-                TextSendMessage(addObject))
-        elif '!remove_' in messageText.lower():
-                add_name()
+                TextSendMessage(addResponse))
+        elif '!remove_'+name in messageText.lower():
+                remove_name(name)
                 line_bot_api.reply_message(event.reply_token,
-                TextSendMessage(removeObject))
+                TextSendMessage(removeResponse))
         elif '!'+name in messageText.lower():
                 line_bot_api.reply_message(event.reply_token,
-                TextSendMessage(account_data))
+                TextSendMessage(editObject))
+        elif '!print_name' in messageText.lower():
+                line_bot_api.reply_message(event.reply_token,
+                TextSendMessage(name))
 
 # def edit_petch():
 #         payload = request.json
 #         messageText = payload['events'][0]['message']['text']
+#         global petch
 #         global editObject
 #         petch = messageText.replace("!edit_petch_","")
 #         editObject = "edit successfully!"
@@ -431,28 +433,35 @@ def handle_message(event):
 def add_name():
         payload = request.json
         messageText = payload['events'][0]['message']['text']
-        global addObject
+        global addResponse
+        global name
         name = messageText.replace("!add_","")
-        name.add(messageText)
-        addObject = "add successfully!"
-        return name,addObject
+        addResponse = "add "+name+" successfully!"
+        print(name)
+        return name,addResponse
 
-def edit_data():
+def edit_data(name):
         payload = request.json
         messageText = payload['events'][0]['message']['text']
         global editObject
-        account_data = messageText.replace("!edit_"+name+'_',"")
-        editObject = "edit successfully!"
-        return account_data,editObject
+        global editResponse
+        editObject = "No data found"
+        if name=="":
+                editResponse = "No name found"                
+                return editResponse,editObject
+        else:
+                editObject = messageText.replace("!edit_"+name+'_',"")
+                editResponse = "edit successfully!"
+                return editObject,editResponse
 
-def remove_name():
+def remove_name(name):
         payload = request.json
         messageText = payload['events'][0]['message']['text']
-        global removeObject
-        name = messageText.replace("!remove_","")
-        name.discard(messageText)
-        removeObject = "remove successfully!"
-        return name,removeObject
+        global removeResponse
+        removeResponse = "remove "+name+" successfully!"
+        name = ""
+        editObject = ""
+        return name,removeResponse,editObject
 
 @app.route('/',methods = ['GET'])
 def hello():
