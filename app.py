@@ -156,6 +156,8 @@ Date={"Date":Date}
 global name
 name = {}
 global petch
+global account_data
+account_data = ""
 petch = ""
 if petch=="":
         petch = "0198435805\nkbank\nThachchai Jantarawiwat"
@@ -402,7 +404,7 @@ def handle_message(event):
         #         edit_petch()
         #         line_bot_api.reply_message(event.reply_token,
         #         TextSendMessage(editObject))
-        elif '!edit_' in messageText.lower():
+        elif '!edit_'+name+'_' in messageText.lower():
                 edit_data()
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(editObject))
@@ -414,6 +416,9 @@ def handle_message(event):
                 add_name()
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(removeObject))
+        elif '!'+name in messageText.lower():
+                line_bot_api.reply_message(event.reply_token,
+                TextSendMessage(account_data))
 
 # def edit_petch():
 #         payload = request.json
@@ -436,9 +441,9 @@ def edit_data():
         payload = request.json
         messageText = payload['events'][0]['message']['text']
         global editObject
-        data = messageText.replace("!edit_","")
+        account_data = messageText.replace("!edit_"+name+'_',"")
         editObject = "edit successfully!"
-        return data,editObject
+        return account_data,editObject
 
 def remove_name():
         payload = request.json
