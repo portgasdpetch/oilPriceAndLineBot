@@ -269,6 +269,22 @@ petch_display_name = profilePetch.display_name
 profileTar = line_bot_api.get_group_member_profile('C1e51478d951eb26967b2ebc7402002fa', 'U29a01915d9a1ef87954b227582cd37ce')
 tar_display_name = profileTar.display_name
 
+#Fai's
+
+#Toy's
+
+#Que's
+
+#Mon's
+
+#Gong's 
+
+#Jame's
+
+#Hack's
+
+#Poat's
+
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
         payload = request.json
@@ -369,7 +385,7 @@ def handle_message(event):
                 line_bot_api.reply_message(event.reply_token,TextSendMessage("0944412122\npromptpay\nChanin Taweeluthikunchai"))
         elif '!help' in messageText.lower():
                 line_bot_api.reply_message(event.reply_token,
-                TextSendMessage("'!account_help\n!gas_help\n!edit_help"))     
+                TextSendMessage("'!account_help\n!gas_help"))     
         elif '!account_help' in messageText.lower():
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage("พิมพ์ '!<ชื่อคน>' ที่ต้องการเพื่อแสดงเลขบัญชี เช่น !มน หรือ !petch"))
