@@ -153,6 +153,9 @@ while(z<100):
 Date={"Date":Date}
 # print(Date.copy())
 
+global name
+name = {}
+global petch
 petch = ""
 if petch=="":
         petch = "0198435805\nkbank\nThachchai Jantarawiwat"
@@ -385,7 +388,7 @@ def handle_message(event):
                 line_bot_api.reply_message(event.reply_token,TextSendMessage("0944412122\npromptpay\nChanin Taweeluthikunchai"))
         elif '!help' in messageText.lower():
                 line_bot_api.reply_message(event.reply_token,
-                TextSendMessage("'!account_help\n!gas_help"))     
+                TextSendMessage("!account_help\n!gas_help"))     
         elif '!account_help' in messageText.lower():
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage("พิมพ์ '!<ชื่อคน>' ที่ต้องการเพื่อแสดงเลขบัญชี เช่น !มน หรือ !petch"))
@@ -395,20 +398,56 @@ def handle_message(event):
         elif '!edit_help' in messageText.lower():
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage("พิมพ์ '!edit_<ชื่อคน>_<ข้อมูล>' ที่ต้องการเพื่อทำการแก้ไขข้อมูลที่จะแสดง เช่น !edit_มน_0880203451 หรือ !petch"))
-        elif '!edit_petch_' in messageText.lower() or '!edit_เพชร_' in messageText.lower():
-                edit_petch()
+        # elif '!edit_petch_' in messageText.lower() or '!edit_เพชร_' in messageText.lower():
+        #         edit_petch()
+        #         line_bot_api.reply_message(event.reply_token,
+        #         TextSendMessage(editObject))
+        elif '!edit_' in messageText.lower():
+                edit_data()
                 line_bot_api.reply_message(event.reply_token,
-                TextSendMessage(editmessage))
+                TextSendMessage(editObject))
+        elif '!add_' in messageText.lower():
+                add_name()
+                line_bot_api.reply_message(event.reply_token,
+                TextSendMessage(addObject))
+        elif '!remove_' in messageText.lower():
+                add_name()
+                line_bot_api.reply_message(event.reply_token,
+                TextSendMessage(removeObject))
 
-def edit_petch():
+# def edit_petch():
+#         payload = request.json
+#         messageText = payload['events'][0]['message']['text']
+#         global editObject
+#         petch = messageText.replace("!edit_petch_","")
+#         editObject = "edit successfully!"
+#         return petch,editObject
+        
+def add_name():
         payload = request.json
         messageText = payload['events'][0]['message']['text']
-        global petch
-        global editmessage
-        petch = messageText.replace("!edit_petch_","")
-        editmessage = "edit successfully!"
-        return petch,editmessage
-        
+        global addObject
+        name = messageText.replace("!add_","")
+        name.add(messageText)
+        addObject = "add successfully!"
+        return name,addObject
+
+def edit_data():
+        payload = request.json
+        messageText = payload['events'][0]['message']['text']
+        global editObject
+        data = messageText.replace("!edit_","")
+        editObject = "edit successfully!"
+        return data,editObject
+
+def remove_name():
+        payload = request.json
+        messageText = payload['events'][0]['message']['text']
+        global removeObject
+        name = messageText.replace("!remove_","")
+        name.discard(messageText)
+        removeObject = "remove successfully!"
+        return name,removeObject
 
 @app.route('/',methods = ['GET'])
 def hello():
