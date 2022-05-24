@@ -381,7 +381,7 @@ def handle_message(event):
                 line_bot_api.reply_message(event.reply_token,TextSendMessage("0802805977\npromptpay\nPatchamon Monwimonporn"))
         elif '!fai' in messageText.lower() or '!ฝ้าย' in messageText:
                 line_bot_api.reply_message(event.reply_token,TextSendMessage("0658068512\nkbank\nNalinee Boonrueng"))
-        elif '!que' in messageText.lower() or 'คิว' in messageText:
+        elif '!que' in messageText.lower() or '!คิว' in messageText:
                 line_bot_api.reply_message(event.reply_token,TextSendMessage("0944412122\npromptpay\nChanin Taweeluthikunchai"))
         elif '!help' in messageText.lower():
                 line_bot_api.reply_message(event.reply_token,
