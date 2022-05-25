@@ -220,7 +220,7 @@ def run_continuously(interval=1):
 #For Heroku Server (timezone)
 schedule.every().day.at("00:00").do(sendEachPrice)
 
-schedule.every().day.at("10:15").do(sendEachPrice)
+schedule.every().day.at("10:00").do(sendEachPrice)
 
 sendEachPrice()
 # Start the background thread
