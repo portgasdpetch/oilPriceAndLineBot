@@ -218,7 +218,7 @@ def run_continuously(interval=1):
 #schedule.every().day.at("17:15").do(sendEachPrice)
 
 #For Heroku Server (timezone)
-schedule.every().day.at("00:00").do(sendEachPrice)
+# schedule.every().day.at("00:00").do(sendEachPrice)
 
 schedule.every().day.at("10:00").do(sendEachPrice)
 
