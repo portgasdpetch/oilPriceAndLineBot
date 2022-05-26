@@ -301,7 +301,7 @@ def handle_message(event):
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(jsonDate))
         elif '!e20' in messageText.lower() or '!gasohole20' in messageText.lower():
-                jsonGasoholE20 = json.dumps(GasoholE20)
+                jsonGasoholE20 = json.dumps(GasoholE20,indent=1)
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(jsonGasoholE20))
         elif '!e85' in messageText.lower() or '!gasohole85' in messageText.lower() :
