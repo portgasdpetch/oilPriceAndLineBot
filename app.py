@@ -297,7 +297,7 @@ def handle_message(event):
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage('https://fathomless-garden-59642.herokuapp.com/callback'))
         elif '!date' in messageText.lower():
-                jsonDate = json.dumps(Date)
+                jsonDate = json.dumps(Date,indent=1)
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(jsonDate))
         elif '!e20' in messageText.lower() or '!gasohole20' in messageText.lower():
@@ -305,46 +305,46 @@ def handle_message(event):
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(jsonGasoholE20))
         elif '!e85' in messageText.lower() or '!gasohole85' in messageText.lower() :
-                jsonGasoholE85 = json.dumps(GasoholE85)
+                jsonGasoholE85 = json.dumps(GasoholE85,indent=1)
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(jsonGasoholE85))
         elif '!g95' in messageText.lower() or '!gas95' in messageText.lower():
                 g95 = Gasoline95.copy()
                 {g95.update(Gasohol95)}
-                jsonG95 = json.dumps(g95)
+                jsonG95 = json.dumps(g95,indent=1)
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(jsonG95))
         elif '!g91' in messageText.lower() or '!gasohol91' in messageText.lower() or '!gas91' in messageText.lower() or '!91' in messageText.lower():
-                jsonGasohol91 = json.dumps(Gasohol91)
+                jsonGasohol91 = json.dumps(Gasohol91,indent=1)
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(jsonGasohol91))
         elif messageText.lower()=='!diesel' or messageText.lower()=='!d':
-                jsonDiesel = json.dumps(Diesel)
+                jsonDiesel = json.dumps(Diesel,indent=1)
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(jsonDiesel))
         elif '!dieselb7' in messageText.lower() or '!db7' in messageText.lower() or '!b7' in messageText.lower():
-                jsonDieselB7 = json.dumps(DieselB7)
+                jsonDieselB7 = json.dumps(DieselB7,indent=1)
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(jsonDieselB7))
         elif '!dieselb20' in messageText.lower() or '!db20' in messageText.lower() or '!b20' in messageText.lower(): 
-                jsonDieselB20 = json.dumps(DieselB20)
+                jsonDieselB20 = json.dumps(DieselB20,indent=1)
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(jsonDieselB20))
         elif '!dieselpremium' in messageText.lower() or '!dp' in messageText.lower(): 
-                jsonDieselPremium = json.dumps(DieselPremium)
+                jsonDieselPremium = json.dumps(DieselPremium,indent=1)
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(jsonDieselPremium))        
         elif '!e10' in messageText.lower() or 'gasohole10' in messageText.lower():
                 e10 = Gasohol95.copy()
-                {e10.update(Gasohol91)}
+                {e10.update(Gasohol91,indent=1)}
                 jsonE10 = json.dumps(e10)
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(jsonE10))
         elif '!gasohol95' in messageText.lower() or '!95' in messageText.lower():
-                jsonGasohol95 = json.dumps(Gasohol95)
+                jsonGasohol95 = json.dumps(Gasohol95,indent=1)
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(jsonGasohol95))
         elif '!gasoline95' in messageText.lower() or '!e0' in messageText.lower():
-                jsonGasoline95 = json.dumps(Gasoline95)
+                jsonGasoline95 = json.dumps(Gasoline95,indent=1)
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(jsonGasoline95))
         elif '!getall' in messageText.lower():
@@ -364,7 +364,7 @@ def handle_message(event):
                 {getAll.update(DieselB20)}
                 getAll = getAll.copy()
                 {getAll.update(DieselPremium)}
-                jsonGetAll = json.dumps(getAll)
+                jsonGetAll = json.dumps(getAll,indent=1)
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(jsonGetAll))
         elif '!petch' in messageText.lower() or '!เพชร' in messageText or '@'+petch_display_name+' ขอเลข' in messageText:                
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(petch))
