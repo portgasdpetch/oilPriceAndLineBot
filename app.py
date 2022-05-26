@@ -299,54 +299,55 @@ def handle_message(event):
         elif '!date' in messageText.lower():
                 jsonDate = json.dumps(Date,indent=1)
                 line_bot_api.reply_message(event.reply_token,
-                TextSendMessage(jsonDate))
+                TextSendMessage(jsonDate.replace("{","").replace("}","").replace('"',"").replace(",","").strip()))
         elif '!e20' in messageText.lower() or '!gasohole20' in messageText.lower():
                 jsonGasoholE20 = json.dumps(GasoholE20,indent=1)
                 line_bot_api.reply_message(event.reply_token,
-                TextSendMessage(jsonGasoholE20))
+                TextSendMessage(jsonGasoholE20.replace("{","").replace("}","").replace('"',"").replace(",","").strip()))
         elif '!e85' in messageText.lower() or '!gasohole85' in messageText.lower() :
                 jsonGasoholE85 = json.dumps(GasoholE85,indent=1)
                 line_bot_api.reply_message(event.reply_token,
-                TextSendMessage(jsonGasoholE85))
+                TextSendMessage(jsonGasoholE85.replace("{","").replace("}","").replace('"',"").replace(",","").strip()))
         elif '!g95' in messageText.lower() or '!gas95' in messageText.lower():
                 g95 = Gasoline95.copy()
                 {g95.update(Gasohol95)}
                 jsonG95 = json.dumps(g95,indent=1)
-                line_bot_api.reply_message(event.reply_token,TextSendMessage(jsonG95))
+                line_bot_api.reply_message(event.reply_token,
+                TextSendMessage(jsonG95.replace("{","").replace("}","").replace('"',"").replace(",","").strip()))
         elif '!g91' in messageText.lower() or '!gasohol91' in messageText.lower() or '!gas91' in messageText.lower() or '!91' in messageText.lower():
                 jsonGasohol91 = json.dumps(Gasohol91,indent=1)
                 line_bot_api.reply_message(event.reply_token,
-                TextSendMessage(jsonGasohol91))
+                TextSendMessage(jsonGasohol91.replace("{","").replace("}","").replace('"',"").replace(",","").strip()))
         elif messageText.lower()=='!diesel' or messageText.lower()=='!d':
                 jsonDiesel = json.dumps(Diesel,indent=1)
                 line_bot_api.reply_message(event.reply_token,
-                TextSendMessage(jsonDiesel))
+                TextSendMessage(jsonDiesel.replace("{","").replace("}","").replace('"',"").replace(",","").strip()))
         elif '!dieselb7' in messageText.lower() or '!db7' in messageText.lower() or '!b7' in messageText.lower():
                 jsonDieselB7 = json.dumps(DieselB7,indent=1)
                 line_bot_api.reply_message(event.reply_token,
-                TextSendMessage(jsonDieselB7))
+                TextSendMessage(jsonDieselB7.replace("{","").replace("}","").replace('"',"").replace(",","").strip()))
         elif '!dieselb20' in messageText.lower() or '!db20' in messageText.lower() or '!b20' in messageText.lower(): 
                 jsonDieselB20 = json.dumps(DieselB20,indent=1)
                 line_bot_api.reply_message(event.reply_token,
-                TextSendMessage(jsonDieselB20))
+                TextSendMessage(jsonDieselB20.replace("{","").replace("}","").replace('"',"").replace(",","").strip()))
         elif '!dieselpremium' in messageText.lower() or '!dp' in messageText.lower(): 
                 jsonDieselPremium = json.dumps(DieselPremium,indent=1)
                 line_bot_api.reply_message(event.reply_token,
-                TextSendMessage(jsonDieselPremium))        
+                TextSendMessage(jsonDieselPremium.replace("{","").replace("}","").replace('"',"").replace(",","").strip()))        
         elif '!e10' in messageText.lower() or 'gasohole10' in messageText.lower():
                 e10 = Gasohol95.copy()
                 {e10.update(Gasohol91,indent=1)}
                 jsonE10 = json.dumps(e10)
                 line_bot_api.reply_message(event.reply_token,
-                TextSendMessage(jsonE10))
+                TextSendMessage(jsonE10.replace("{","").replace("}","").replace('"',"").replace(",","").strip()))
         elif '!gasohol95' in messageText.lower() or '!95' in messageText.lower():
                 jsonGasohol95 = json.dumps(Gasohol95,indent=1)
                 line_bot_api.reply_message(event.reply_token,
-                TextSendMessage(jsonGasohol95))
+                TextSendMessage(jsonGasohol95.replace("{","").replace("}","").replace('"',"").replace(",","").strip()))
         elif '!gasoline95' in messageText.lower() or '!e0' in messageText.lower():
                 jsonGasoline95 = json.dumps(Gasoline95,indent=1)
                 line_bot_api.reply_message(event.reply_token,
-                TextSendMessage(jsonGasoline95))
+                TextSendMessage(jsonGasoline95.replace("{","").replace("}","").replace('"',"").replace(",","").strip()))
         elif '!getall' in messageText.lower():
                 getAll = Gasoline95.copy()
                 {getAll.update(Gasohol95)}
@@ -364,8 +365,10 @@ def handle_message(event):
                 {getAll.update(DieselB20)}
                 getAll = getAll.copy()
                 {getAll.update(DieselPremium)}
+                getAll = getAll.copy()
+                {getAll.update(Date)}
                 jsonGetAll = json.dumps(getAll,indent=1)
-                line_bot_api.reply_message(event.reply_token,TextSendMessage(jsonGetAll))
+                line_bot_api.reply_message(event.reply_token,TextSendMessage(jsonGetAll.replace("{","").replace("}","").replace('"',"").replace(",","").strip()))
         elif '!petch' in messageText.lower() or '!เพชร' in messageText or '@'+petch_display_name+' ขอเลข' in messageText:                
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(petch))
         elif '!ton' in messageText.lower() or '!ต้น' in messageText:
