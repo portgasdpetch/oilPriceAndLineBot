@@ -336,10 +336,16 @@ def handle_message(event):
                 TextSendMessage(jsonDieselPremium.replace("{","").replace("}","").replace('"',"").replace(",","").strip()))        
         elif '!e10' in messageText.lower() or 'gasohole10' in messageText.lower():
                 e10 = Gasohol95.copy()
-                {e10.update(Gasohol91,indent=1)}
-                jsonE10 = json.dumps(e10)
+                {e10.update(Gasohol91)}
+                jsonGasohol95 = json.dumps(Gasohol95,indent=1)
+                jsonGasohol91 = json.dumps(Gasohol91,indent=1)
+                jsonE10 = json.dumps(e10,indent=1)
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(jsonE10.replace("{","").replace("}","").replace('"',"").replace(",","").strip()))
+                # TextSendMessage(jsonGasohol95[1:14].replace("{","").replace("}","").replace('"',"").replace(",","").strip()+
+                # "\t\t\t\t\t\t\t\t\t\t\t\t"+jsonGasohol91[1:14].replace("{","").replace("}","").replace('"',"").replace(",","").strip()+
+                # "\n"+jsonGasohol95[15:33].replace("{","").replace("}","").replace('"',"").replace(",","").strip()+
+                # "\t\t\t\t\t\t\t\t\t\t\t\t\t"+jsonGasohol91[15:33].replace("{","").replace("}","").replace('"',"").replace(",","").strip()))
         elif '!gasohol95' in messageText.lower() or '!95' in messageText.lower():
                 jsonGasohol95 = json.dumps(Gasohol95,indent=1)
                 line_bot_api.reply_message(event.reply_token,
