@@ -436,7 +436,7 @@ def handle_message(event):
                 TextSendMessage(name))
         elif 'มีซีค' in messageText:
                 meeseekAns =  ["ครับ","ว่าไง","อะไร","เรียกไมครับ","เรียกหาแม่"]
-                meeseekResponse = random.choices(meeseekAns, weights = [1,1,1,0.1])
+                meeseekResponse = random.choices(meeseekAns, weights = [1,1,1,1,0.1])
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(meeseekResponse))
 
