@@ -247,19 +247,21 @@ def callback():
 
     payload = request.json
     print(payload)
-    typerId = payload['events'][0]['source']['userId']
-    print(typerId)
-    typerProfile = line_bot_api.get_profile(typerId)
-    typerName = typerProfile.display_name
-    print(typerName) 
+
 
     # make verification on LineDev to success when there is no event(verifying will send an empty event)
-    if (payload['events'])!=([]):
+    if (payload['events'])!=([]):        
         if(payload['events'][0]['message']['type']=='text'):
                 messageText = payload['events'][0]['message']['text'] 
                 print(messageText) 
                 print(payload['events'][0]['message']['type'])
                 print(type(payload['events'][0]['message']['type']))
+
+                # typerId = payload['events'][0]['source']['userId']
+                # print(typerId)
+                # typerProfile = line_bot_api.get_profile(typerId)
+                # typerName = typerProfile.display_name
+                # print(typerName) 
 
     # handle webhook body
     try:
@@ -271,14 +273,20 @@ def callback():
     return 'OK'
 
 biggroupId = "Ced6a903720e8fa345b7ca2bfa34fef09"
+petchGroup = 'C9242e9cb7ca747d8e1f04a4dbf0e22db'
+petchTarGroup = 'C1e51478d951eb26967b2ebc7402002fa'
 #Petch's profile
 #from bot's friend
 profilePetch = line_bot_api.get_profile('U549838cc9a6ab9747c837176294e02c4')
 petch_display_name = profilePetch.display_name
 
+#Petch's 2 profile # for testing
+profilePetch2 = line_bot_api.get_group_member_profile(petchGroup,'U0f9012096be57e23da3ebfc35d3136f9')
+petch2_display_name = profilePetch2.display_name
+
 #Tar's profile
 #from group of 3 members
-profileTar = line_bot_api.get_profile('U29a01915d9a1ef87954b227582cd37ce')
+profileTar = line_bot_api.get_group_member_profile(biggroupId,'U29a01915d9a1ef87954b227582cd37ce')
 tar_display_name = profileTar.display_name
 
 #Fai's
@@ -308,9 +316,11 @@ jame_display_name = profileJame.display_name
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
         payload = request.json
-        messageText = payload['events'][0]['message']['text']    
-        typer = payload['source']['userId']
-        
+        messageText = payload['events'][0]['message']['text']
+        # typerId = payload['events'][0]['source']['userId']
+        # typerProfile = line_bot_api.get_profile(typerId)
+        # typerName = typerProfile.display_name
+
         if '!heroku' in messageText.lower():
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage('https://fathomless-garden-59642.herokuapp.com/callback'))
@@ -393,7 +403,7 @@ def handle_message(event):
                 {getAll.update(Date)}
                 jsonGetAll = json.dumps(getAll,indent=1)
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(jsonGetAll.replace("{","").replace("}","").replace('"',"").replace(",","").strip()))
-        elif '!petch' in messageText.lower() or '!เพชร' in messageText or '@'+petch_display_name+' ขอเลข' in messageText:                
+        elif '!petch' in messageText.lower() or '!เพชร' in messageText or '@'+petch_display_name+' ขอเลข' in messageText or '@'+petch2_display_name+' ขอเลข':                
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(petch))
         elif '!ton' in messageText.lower() or '!ต้น' in messageText:
                 line_bot_api.reply_message(event.reply_token,TextSendMessage("0922616652\npromptpay\nSarannon Srinarongsuk"))
