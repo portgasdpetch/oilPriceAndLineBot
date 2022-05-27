@@ -4,6 +4,7 @@ from dataclasses import asdict
 from email import message
 from mmap import ACCESS_DEFAULT
 from multiprocessing import Event
+import random
 from telnetlib import GA
 from unicodedata import decomposition
 from selenium import webdriver
@@ -265,10 +266,12 @@ def callback():
     return 'OK'
 
 #Petch's profile
+#from bot's friend
 profilePetch = line_bot_api.get_profile('U549838cc9a6ab9747c837176294e02c4')
 petch_display_name = profilePetch.display_name
 
 #Tar's profile
+#from group of 3 members
 profileTar = line_bot_api.get_group_member_profile('C1e51478d951eb26967b2ebc7402002fa', 'U29a01915d9a1ef87954b227582cd37ce')
 tar_display_name = profileTar.display_name
 
@@ -279,6 +282,8 @@ tar_display_name = profileTar.display_name
 #Que's
 
 #Mon's
+profileMon = line_bot_api.get_group_member_profile('Ced6a903720e8fa345b7ca2bfa34fef09','U549838cc9a6ab9747c837176294e02c4')
+mon_display_name = profileMon.display_name
 
 #Gong's 
 
@@ -387,7 +392,7 @@ def handle_message(event):
                 line_bot_api.reply_message(event.reply_token,TextSendMessage("0018398265\nkbank\nNarathip Thongprathun"))
         elif '!bell' in messageText.lower() or '!เบล' in messageText:
                 line_bot_api.reply_message(event.reply_token,TextSendMessage("4300831278\nSCB\nNoppon Meta-awirutruedee"))
-        elif '!mon' in messageText.lower() or '!มน' in messageText:
+        elif '!mon' in messageText.lower() or '!มน' in messageText or '@'+mon_display_name+' ขอเลข' in messageText:
                 line_bot_api.reply_message(event.reply_token,TextSendMessage("0880203451\npromptpay\nPongsakorn Isarapatthanakul"))
         elif '!tar' in messageText.lower() or '!ต้า' in messageText or '@'+tar_display_name+' ขอเลข' in messageText:
                 line_bot_api.reply_message(event.reply_token,TextSendMessage("0802805977\npromptpay\nPatchamon Monwimonporn"))
@@ -429,6 +434,11 @@ def handle_message(event):
         elif '!print_name' in messageText.lower():
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(name))
+        elif 'มีซีค' in messageText:
+                meeseekAns =  ["ครับ","ว่าไง","อะไร","เรียกไมครับ","เรียกหาแม่"]
+                meeseekResponse = random.choices(meeseekAns, weights = [1,1,1,0.1])
+                line_bot_api.reply_message(event.reply_token,
+                TextSendMessage(meeseekResponse))
 
 # def edit_petch():
 #         payload = request.json
