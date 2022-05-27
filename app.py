@@ -247,6 +247,11 @@ def callback():
 
     payload = request.json
     print(payload)
+    typerId = payload['events'][0]['source']['userId']
+    print(typerId)
+    typerProfile = line_bot_api.get_profile(typerId)
+    typerName = typerProfile.display_name
+    print(typerName) 
 
     # make verification on LineDev to success when there is no event(verifying will send an empty event)
     if (payload['events'])!=([]):
@@ -273,7 +278,7 @@ petch_display_name = profilePetch.display_name
 
 #Tar's profile
 #from group of 3 members
-profileTar = line_bot_api.get_group_member_profile('C1e51478d951eb26967b2ebc7402002fa', 'U29a01915d9a1ef87954b227582cd37ce')
+profileTar = line_bot_api.get_profile('U29a01915d9a1ef87954b227582cd37ce')
 tar_display_name = profileTar.display_name
 
 #Fai's
@@ -304,6 +309,7 @@ jame_display_name = profileJame.display_name
 def handle_message(event):
         payload = request.json
         messageText = payload['events'][0]['message']['text']    
+        typer = payload['source']['userId']
         
         if '!heroku' in messageText.lower():
                 line_bot_api.reply_message(event.reply_token,
