@@ -265,6 +265,7 @@ def callback():
 
     return 'OK'
 
+biggroupId = "Ced6a903720e8fa345b7ca2bfa34fef09"
 #Petch's profile
 #from bot's friend
 profilePetch = line_bot_api.get_profile('U549838cc9a6ab9747c837176294e02c4')
@@ -278,8 +279,12 @@ tar_display_name = profileTar.display_name
 #Fai's
 
 #Toy's
+profileToy = line_bot_api.get_group_member_profile(biggroupId,'U4d3384c0799063c9623ec368d2a0908d')
+toy_display_name = profileToy.display_name
 
 #Que's
+profileQue = line_bot_api.get_group_member_profile(biggroupId,'U31c15b54f58407eb63f2ce8c508939ba')
+que_display_name = profileQue.display_name
 
 #Mon's
 profileMon = line_bot_api.get_group_member_profile('Ced6a903720e8fa345b7ca2bfa34fef09','U549838cc9a6ab9747c837176294e02c4')
@@ -288,6 +293,8 @@ mon_display_name = profileMon.display_name
 #Gong's 
 
 #Jame's
+profileJame = line_bot_api.get_group_member_profile(biggroupId,'U64f2a07ce60ef7e7f94056411af7237e')
+jame_display_name = profileJame.display_name
 
 #Hack's
 
@@ -384,9 +391,9 @@ def handle_message(event):
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(petch))
         elif '!ton' in messageText.lower() or '!ต้น' in messageText:
                 line_bot_api.reply_message(event.reply_token,TextSendMessage("0922616652\npromptpay\nSarannon Srinarongsuk"))
-        elif '!toy' in messageText.lower() or '!ทอย' in messageText:
+        elif '!toy' in messageText.lower() or '!ทอย' in messageText or '@'+toy_display_name+' ขอเลข' in messageText:
                 line_bot_api.reply_message(event.reply_token,TextSendMessage("2242567291\nTTB\nChutikarn Khampee"))
-        elif '!jame' in messageText.lower() or '!เจม' in messageText:
+        elif '!jame' in messageText.lower() or '!เจม' in messageText or '@'+jame_display_name+' ขอเลข' in messageText:
                 line_bot_api.reply_message(event.reply_token,TextSendMessage("0273461043\nkbank\nChaiyanat Noodang"))
         elif '!poat' in messageText.lower() or '!โป๊ต' in messageText:
                 line_bot_api.reply_message(event.reply_token,TextSendMessage("0018398265\nkbank\nNarathip Thongprathun"))
@@ -398,7 +405,7 @@ def handle_message(event):
                 line_bot_api.reply_message(event.reply_token,TextSendMessage("0802805977\npromptpay\nPatchamon Monwimonporn"))
         elif '!fai' in messageText.lower() or '!ฝ้าย' in messageText:
                 line_bot_api.reply_message(event.reply_token,TextSendMessage("0658068512\nkbank\nNalinee Boonrueng"))
-        elif '!que' in messageText.lower() or '!คิว' in messageText:
+        elif '!que' in messageText.lower() or '!คิว' in messageText or '@'+que_display_name+' ขอเลข' in messageText:
                 line_bot_api.reply_message(event.reply_token,TextSendMessage("0944412122\npromptpay\nChanin Taweeluthikunchai"))
         elif '!help' in messageText.lower():
                 line_bot_api.reply_message(event.reply_token,
@@ -436,9 +443,9 @@ def handle_message(event):
                 TextSendMessage(name))
         elif 'มีซีค' in messageText:
                 meeseekAns =  ["ครับ","ว่าไง","อะไร","เรียกไมครับ","เรียกหาแม่"]
-                meeseekResponse = random.choices(meeseekAns, weights = [1,1,1,1,0.1])
+                meeseekResponse = random.choices(meeseekAns, weights = [1,1,1,1,0.5])
                 line_bot_api.reply_message(event.reply_token,
-                TextSendMessage(meeseekResponse))
+                TextSendMessage(meeseekResponse[0]))
 
 # def edit_petch():
 #         payload = request.json
