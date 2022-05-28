@@ -31,7 +31,7 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage,)
+    MessageEvent, TextMessage, TextSendMessage,ImageSendMessage)
     
 
 
@@ -405,6 +405,10 @@ def handle_message(event):
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(jsonGetAll.replace("{","").replace("}","").replace('"',"").replace(",","").strip()))
         elif '!petch' in messageText.lower() or '!เพชร' in messageText or '@'+petch_display_name+' ขอเลข' in messageText:                
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(petch))
+        elif 'qr_petch' in messageText.lower():
+                line_bot_api.reply_message(event.reply_token,ImageSendMessage(
+                original_content_url="https://firebasestorage.googleapis.com/v0/b/meeseeks-34d9f.appspot.com/o/qr_promptpay%2F1653646122742.jpeg?alt=media&token=fe3fa019-6b27-48bf-bc28-e366b913fffe",
+                preview_image_url="https://firebasestorage.googleapis.com/v0/b/meeseeks-34d9f.appspot.com/o/qr_promptpay%2F1653646122742.jpeg?alt=media&token=fe3fa019-6b27-48bf-bc28-e366b913fffe"))
         elif '!ton' in messageText.lower() or '!ต้น' in messageText:
                 line_bot_api.reply_message(event.reply_token,TextSendMessage("0922616652\npromptpay\nSarannon Srinarongsuk"))
         elif '!toy' in messageText.lower() or '!ทอย' in messageText or '@'+toy_display_name+' ขอเลข' in messageText:
@@ -419,6 +423,11 @@ def handle_message(event):
                 line_bot_api.reply_message(event.reply_token,TextSendMessage("0880203451\npromptpay\nPongsakorn Isarapatthanakul"))
         elif '!tar' in messageText.lower() or '!ต้า' in messageText or '@'+tar_display_name+' ขอเลข' in messageText:
                 line_bot_api.reply_message(event.reply_token,TextSendMessage("0802805977\npromptpay\nPatchamon Monwimonporn"))
+        elif 'qr_tar' in messageText.lower():
+                line_bot_api.reply_message(event.reply_token,ImageSendMessage(
+                        original_content_url='https://firebasestorage.googleapis.com/v0/b/meeseeks-34d9f.appspot.com/o/qr_promptpay%2FD9FDEF12-F3DC-4BE1-BA12-9E195A1E0462.jpg?alt=media&token=200f5f16-eb55-4e45-a1c2-0286dfef5576',
+                        preview_image_url='https://firebasestorage.googleapis.com/v0/b/meeseeks-34d9f.appspot.com/o/qr_promptpay%2FD9FDEF12-F3DC-4BE1-BA12-9E195A1E0462.jpg?alt=media&token=200f5f16-eb55-4e45-a1c2-0286dfef5576'
+                ))
         elif '!fai' in messageText.lower() or '!ฝ้าย' in messageText:
                 line_bot_api.reply_message(event.reply_token,TextSendMessage("0658068512\nkbank\nNalinee Boonrueng"))
         elif '!que' in messageText.lower() or '!คิว' in messageText or '@'+que_display_name+' ขอเลข' in messageText:
