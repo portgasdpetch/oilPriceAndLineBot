@@ -15,13 +15,13 @@ from bs4 import BeautifulSoup as soup
 import os
 from collections import defaultdict
 from flask import Flask, request, abort
-import requests
 import json
 import errno
 import os
 import sys
 import tempfile
 import threading
+import pyrebase
 from argparse import ArgumentParser
 from flask import Flask, request, abort
 from linebot import (
@@ -222,16 +222,49 @@ def run_continuously(interval=1):
 # schedule.every().day.at("00:00").do(sendEachPrice)
 
 schedule.every().day.at("10:00").do(sendEachPrice)
+# schedule.every(3).seconds.do(job)
+# schedule.every(10).minutes.do(job)
+# schedule.every().hour.do(job)
 
 sendEachPrice()
 # Start the background thread
 stop_run_continuously = run_continuously()
 
 
-# schedule.every(3).seconds.do(job)
-# schedule.every(10).minutes.do(job)
-# schedule.every().hour.do(job)
 
+firebaseConfig = {
+    "apiKey": "AIzaSyA26MsLH9zJXW3-ud8wqJM0K4Ce0VSw-q4",
+    "authDomain": "meeseeks-34d9f.firebaseapp.com",
+    "databaseURL": "https://meeseeks-34d9f-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "projectId": "meeseeks-34d9f",
+    "storageBucket": "meeseeks-34d9f.appspot.com",
+    "messagingSenderId": "187415397235",
+    "appId": "1:187415397235:web:726a6de507c9ba2f13bb06",
+    "measurementId": "G-2NR908DJPB"
+    }
+
+firebase=pyrebase.initialize_app(firebaseConfig)
+
+db=firebase.database()
+
+#Push data
+#data2={"name":"John Wick","age":47}
+#db.push(data2)
+
+#set data #similar to push
+data2={}
+db.child("accountName").child("bell").child("fullName").set("Noppon Meta-awirutruedee")
+db.child("accountName").child("hack").child("fullName").set("Supanat Akkarawongvisit")
+db.child("accountName").child("hack").child("fullname").remove()
+
+account = db.child("accountName").get()
+print(account.val())
+
+account2 = db.child("accountName").child("bell").get()
+print(account2.key(),account2.val())
+
+account3 = db.child("accountName").child("hack").get()
+print(account3.key(),account3.val())
 
 app = Flask(__name__)
 
@@ -425,8 +458,8 @@ def handle_message(event):
                 line_bot_api.reply_message(event.reply_token,TextSendMessage("0802805977\npromptpay\nPatchamon Monwimonporn"))
         elif 'qr_tar' in messageText.lower():
                 line_bot_api.reply_message(event.reply_token,ImageSendMessage(
-                        original_content_url='https://firebasestorage.googleapis.com/v0/b/meeseeks-34d9f.appspot.com/o/qr_promptpay%2FD9FDEF12-F3DC-4BE1-BA12-9E195A1E0462.jpg?alt=media&token=200f5f16-eb55-4e45-a1c2-0286dfef5576',
-                        preview_image_url='https://firebasestorage.googleapis.com/v0/b/meeseeks-34d9f.appspot.com/o/qr_promptpay%2FD9FDEF12-F3DC-4BE1-BA12-9E195A1E0462.jpg?alt=media&token=200f5f16-eb55-4e45-a1c2-0286dfef5576'
+                original_content_url='https://firebasestorage.googleapis.com/v0/b/meeseeks-34d9f.appspot.com/o/qr_promptpay%2FD9FDEF12-F3DC-4BE1-BA12-9E195A1E0462.jpg?alt=media&token=200f5f16-eb55-4e45-a1c2-0286dfef5576',
+                preview_image_url='https://firebasestorage.googleapis.com/v0/b/meeseeks-34d9f.appspot.com/o/qr_promptpay%2FD9FDEF12-F3DC-4BE1-BA12-9E195A1E0462.jpg?alt=media&token=200f5f16-eb55-4e45-a1c2-0286dfef5576'
                 ))
         elif '!fai' in messageText.lower() or '!ฝ้าย' in messageText:
                 line_bot_api.reply_message(event.reply_token,TextSendMessage("0658068512\nkbank\nNalinee Boonrueng"))
