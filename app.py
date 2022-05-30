@@ -171,16 +171,27 @@ messenger = Sendline(token)
 # messenger.sendtext(result.items())
 
 def sendEachPrice():
-        messenger.sendtext(Date.items())
-        messenger.sendtext(Gasoline95.items())
-        messenger.sendtext(Gasohol95.items())
-        messenger.sendtext(Gasohol91.items())
-        messenger.sendtext(GasoholE20.items())
-        messenger.sendtext(GasoholE85.items())
-        messenger.sendtext(DieselB7.items())
-        messenger.sendtext(Diesel.items())
-        messenger.sendtext(DieselB20.items())
-        messenger.sendtext(DieselPremium.items())
+        #dumps json to clean text to print pretty string
+        jsonDate = json.dumps(Date,indent=1)
+        messenger.sendtext(jsonDate.replace("{","").replace("}","").replace('"',"").replace(",","").strip())
+        jsonGasoline95 = json.dumps(Gasoline95,indent=1)
+        messenger.sendtext(jsonGasoline95.replace("{","").replace("}","").replace('"',"").replace(",","").strip())
+        jsonGasohol95 = json.dumps(Gasoline95,indent=1)
+        messenger.sendtext(jsonGasohol95.replace("{","").replace("}","").replace('"',"").replace(",","").strip())
+        jsonGasohol91 = json.dumps(Gasohol91,indent=1)
+        messenger.sendtext(jsonGasohol91.replace("{","").replace("}","").replace('"',"").replace(",","").strip())
+        jsonGasoholE20 = json.dumps(GasoholE20,indent=1)
+        messenger.sendtext(jsonGasoholE20.replace("{","").replace("}","").replace('"',"").replace(",","").strip())
+        jsonGasoholE85 = json.dumps(GasoholE85,indent=1)
+        messenger.sendtext(jsonGasoholE85.replace("{","").replace("}","").replace('"',"").replace(",","").strip())
+        jsonDieselB7 = json.dumps(DieselB7,indent=1)
+        messenger.sendtext(jsonDieselB7.replace("{","").replace("}","").replace('"',"").replace(",","").strip())
+        jsonDiesel = json.dumps(Diesel,indent=1)
+        messenger.sendtext(jsonDiesel.replace("{","").replace("}","").replace('"',"").replace(",","").strip())
+        jsonDieselB20 = json.dumps(DieselB20,indent=1)
+        messenger.sendtext(jsonDieselB20.replace("{","").replace("}","").replace('"',"").replace(",","").strip())
+        jsonDieselPremium = json.dumps(DieselPremium,indent=1)
+        messenger.sendtext(jsonDieselPremium.replace("{","").replace("}","").replace('"',"").replace(",","").strip())
 
 # line_bot_token
 lineBotApi = 'PTbNtC5m+gVfsYzvhp8dBtjkUiwd8jxyv7kxS4RlJpNIunDdedUN0sNXZFtVIB9p0TdLZ5hc50Ax8WskZo3DTceVUBKmRZvVfgK7lR6GmDPDy194G+bjvSWhFru0j4qzC1yc0PK7DaLnPbT75oxR6gdB04t89/1O/w1cDnyilFU='
@@ -253,18 +264,18 @@ db=firebase.database()
 
 #set data #similar to push
 data2={}
-db.child("accountName").child("bell").child("fullName").set("Noppon Meta-awirutruedee")
-db.child("accountName").child("hack").child("fullName").set("Supanat Akkarawongvisit")
-db.child("accountName").child("hack").child("fullname").remove()
+#db.child("accountName").child("bell").child("fullName").set("Noppon Meta-awirutruedee")
+db.child("accountName").child("toy").child("account").child("promptpay").set("0845353411")
+db.child("accountName").child("toy").child("promptpay").remove()
 
 account = db.child("accountName").get()
 print(account.val())
 
-account2 = db.child("accountName").child("bell").get()
-print(account2.key(),account2.val())
+#account2 = db.child("accountName").child("bell").get()
+#print(account2.key(),account2.val())
 
-account3 = db.child("accountName").child("hack").get()
-print(account3.key(),account3.val())
+#account3 = db.child("accountName").child("hack").get()
+#print(account3.key(),account3.val())
 
 app = Flask(__name__)
 
@@ -437,7 +448,10 @@ def handle_message(event):
                 jsonGetAll = json.dumps(getAll,indent=1)
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(jsonGetAll.replace("{","").replace("}","").replace('"',"").replace(",","").strip()))
         elif '!petch' in messageText.lower() or '!เพชร' in messageText or '@'+petch_display_name+' ขอเลข' in messageText:                
-                line_bot_api.reply_message(event.reply_token,TextSendMessage(petch))
+                read_db()
+                line_bot_api.reply_message(event.reply_token,TextSendMessage(
+                        jsonAccount
+                ))
         elif 'qr_petch' in messageText.lower():
                 line_bot_api.reply_message(event.reply_token,ImageSendMessage(
                 original_content_url="https://firebasestorage.googleapis.com/v0/b/meeseeks-34d9f.appspot.com/o/qr_promptpay%2F1653646122742.jpeg?alt=media&token=fe3fa019-6b27-48bf-bc28-e366b913fffe",
@@ -513,6 +527,17 @@ def handle_message(event):
 #         petch = messageText.replace("!edit_petch_","")
 #         editObject = "edit successfully!"
 #         return petch,editObject
+
+def read_db():
+        payload = request.json
+        messageText = payload['events'][0]['message']['text']
+        name = messageText.replace("!","")
+        account = db.child("accountName").child(name).get()
+        print(account.val())
+        global jsonAccount 
+        jsonAccount = json.dumps(account.val(),indent=1)
+        jsonAccount = jsonAccount.replace("{","").replace("}","").replace('"',"").replace(",","").strip()
+        jsonAccount = jsonAccount.replace("account","Account").replace("fullName","Full Name")
         
 def add_name():
         payload = request.json
