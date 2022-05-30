@@ -263,13 +263,13 @@ db=firebase.database()
 #db.push(data2)
 
 #set data #similar to push
-data2={}
+#data2={}
 #db.child("accountName").child("bell").child("fullName").set("Noppon Meta-awirutruedee")
-db.child("accountName").child("toy").child("account").child("promptpay").set("0845353411")
-db.child("accountName").child("toy").child("promptpay").remove()
+#db.child("accountName").child("toy").child("account").child("promptpay").set("0845353411")
+#db.child("accountName").child("toy").child("promptpay").remove()
 
-account = db.child("accountName").get()
-print(account.val())
+#account = db.child("accountName").get()
+#print(account.val())
 
 #account2 = db.child("accountName").child("bell").get()
 #print(account2.key(),account2.val())
