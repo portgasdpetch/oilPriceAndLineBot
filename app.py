@@ -1,4 +1,5 @@
 from asyncio import events
+from audioop import reverse
 from contextlib import AsyncContextDecorator
 from dataclasses import asdict
 from email import message
@@ -22,6 +23,7 @@ import sys
 import tempfile
 import threading
 import pyrebase
+import yaml
 from argparse import ArgumentParser
 from flask import Flask, request, abort
 from linebot import (
@@ -449,6 +451,7 @@ def handle_message(event):
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(jsonGetAll.replace("{","").replace("}","").replace('"',"").replace(",","").strip()))
         elif '!petch' in messageText.lower() or '!เพชร' in messageText or '@'+petch_display_name+' ขอเลข' in messageText:                
                 read_db()
+                print(jsonAccount)
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(
                         jsonAccount
                 ))
@@ -491,28 +494,6 @@ def handle_message(event):
         elif '!edit_help' in messageText.lower():
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage("พิมพ์ '!edit_<ชื่อคน>_<ข้อมูล>' ที่ต้องการเพื่อทำการแก้ไขข้อมูลที่จะแสดง เช่น !edit_มน_0880203451 หรือ !petch"))
-        # elif '!edit_petch_' in messageText.lower() or '!edit_เพชร_' in messageText.lower():
-        #         edit_petch()
-        #         line_bot_api.reply_message(event.reply_token,
-        #         TextSendMessage(editObject))
-        elif '!edit_'+name+'_' in messageText.lower():
-                edit_data(name)
-                line_bot_api.reply_message(event.reply_token,
-                TextSendMessage(editResponse))
-        elif '!add_' in messageText.lower():
-                add_name()
-                line_bot_api.reply_message(event.reply_token,
-                TextSendMessage(addResponse))
-        elif '!remove_'+name in messageText.lower():
-                remove_name(name)
-                line_bot_api.reply_message(event.reply_token,
-                TextSendMessage(removeResponse))
-        elif '!'+name in messageText.lower():
-                line_bot_api.reply_message(event.reply_token,
-                TextSendMessage(editObject))
-        elif '!print_name' in messageText.lower():
-                line_bot_api.reply_message(event.reply_token,
-                TextSendMessage(name))
         elif 'มีซีค' in messageText:
                 meeseekAns =  ["ครับ","ว่าไง","อะไร","เรียกไมครับ","เรียกหาแม่"]
                 meeseekResponse = random.choices(meeseekAns, weights = [1,1,1,1,0.5])
@@ -533,10 +514,20 @@ def read_db():
         messageText = payload['events'][0]['message']['text']
         name = messageText.replace("!","")
         account = db.child("accountName").child(name).get()
+        ascendingDict = {}
+        ascendingDict.update(account.val())
         print(account.val())
+        print(ascendingDict)
+        #use lambda function to keep the key and value of the dict, or only the keys are rest
+        descendingDict = sorted(ascendingDict.items(),key = lambda x: x,
+        reverse=True)
+        print(descendingDict)
         global jsonAccount 
+        #jsonAccount = json.dumps(descendingDict,separators=(',',':'),indent=1)
+        #jsonAccount = yaml.dump(descendingDict,default_flow_style=False)
         jsonAccount = json.dumps(account.val(),indent=1)
-        jsonAccount = jsonAccount.replace("{","").replace("}","").replace('"',"").replace(",","").strip()
+        jsonAccount = jsonAccount.replace("[","").replace("]","").replace('"',
+        "").replace(",","").replace("{","").replace("}","").strip()
         jsonAccount = jsonAccount.replace("account","Account").replace("fullName","Full Name")
         
 def add_name():
