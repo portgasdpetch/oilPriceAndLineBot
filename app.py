@@ -178,7 +178,7 @@ def sendEachPrice():
         messenger.sendtext(jsonDate.replace("{","").replace("}","").replace('"',"").replace(",","").strip())
         jsonGasoline95 = json.dumps(Gasoline95,indent=1)
         messenger.sendtext(jsonGasoline95.replace("{","").replace("}","").replace('"',"").replace(",","").strip())
-        jsonGasohol95 = json.dumps(Gasoline95,indent=1)
+        jsonGasohol95 = json.dumps(Gasohol95,indent=1)
         messenger.sendtext(jsonGasohol95.replace("{","").replace("}","").replace('"',"").replace(",","").strip())
         jsonGasohol91 = json.dumps(Gasohol91,indent=1)
         messenger.sendtext(jsonGasohol91.replace("{","").replace("}","").replace('"',"").replace(",","").strip())
