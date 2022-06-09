@@ -266,9 +266,11 @@ db=firebase.database()
 
 #set data #similar to push
 #data2={}
-#db.child("accountName").child("bell").child("fullName").set("Noppon Meta-awirutruedee")
+# db.child("accountName").child("bell").child("fullName").set("Noppon Meta-awirutruedee")
+#db.child("accountName").child("bell").child("!fullName").set("Noppon Meta-awirutruedee")
 #db.child("accountName").child("toy").child("account").child("promptpay").set("0845353411")
-#db.child("accountName").child("toy").child("promptpay").remove()
+db.child("accountName").child("petch").child("!fullName").set("Thachchai Jantarawiwat")
+db.child("accountName").child("petch").child("fullName").remove()
 
 #account = db.child("accountName").get()
 #print(account.val())
@@ -528,7 +530,7 @@ def read_db():
         jsonAccount = json.dumps(account.val(),indent=1)
         jsonAccount = jsonAccount.replace("[","").replace("]","").replace('"',
         "").replace(",","").replace("{","").replace("}","").strip()
-        jsonAccount = jsonAccount.replace("account","Account").replace("fullName","Full Name")
+        jsonAccount = jsonAccount.replace("account","Account").replace("!fullName","Full Name")
         
 def add_name():
         payload = request.json
