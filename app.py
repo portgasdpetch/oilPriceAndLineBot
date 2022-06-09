@@ -174,8 +174,13 @@ messenger = Sendline(token)
 
 def sendEachPrice():
         #dumps json to clean text to print pretty string
-        jsonDate = json.dumps(Date,indent=1)
-        messenger.sendtext(jsonDate.replace("{","").replace("}","").replace('"',"").replace(",","").strip())
+        messenger.sendtext(jsonDieselB7.replace("{","").replace("}","").replace('"',"").replace(",","").strip())
+        jsonDiesel = json.dumps(Diesel,indent=1)
+        messenger.sendtext(jsonDiesel.replace("{","").replace("}","").replace('"',"").replace(",","").strip())
+        jsonDieselB20 = json.dumps(DieselB20,indent=1)
+        messenger.sendtext(jsonDieselB20.replace("{","").replace("}","").replace('"',"").replace(",","").strip())
+        jsonDieselPremium = json.dumps(DieselPremium,indent=1)
+        messenger.sendtext(jsonDieselPremium.replace("{","").replace("}","").replace('"',"").replace(",","").strip())        
         jsonGasoline95 = json.dumps(Gasoline95,indent=1)
         messenger.sendtext(jsonGasoline95.replace("{","").replace("}","").replace('"',"").replace(",","").strip())
         jsonGasohol95 = json.dumps(Gasohol95,indent=1)
@@ -187,13 +192,8 @@ def sendEachPrice():
         jsonGasoholE85 = json.dumps(GasoholE85,indent=1)
         messenger.sendtext(jsonGasoholE85.replace("{","").replace("}","").replace('"',"").replace(",","").strip())
         jsonDieselB7 = json.dumps(DieselB7,indent=1)
-        messenger.sendtext(jsonDieselB7.replace("{","").replace("}","").replace('"',"").replace(",","").strip())
-        jsonDiesel = json.dumps(Diesel,indent=1)
-        messenger.sendtext(jsonDiesel.replace("{","").replace("}","").replace('"',"").replace(",","").strip())
-        jsonDieselB20 = json.dumps(DieselB20,indent=1)
-        messenger.sendtext(jsonDieselB20.replace("{","").replace("}","").replace('"',"").replace(",","").strip())
-        jsonDieselPremium = json.dumps(DieselPremium,indent=1)
-        messenger.sendtext(jsonDieselPremium.replace("{","").replace("}","").replace('"',"").replace(",","").strip())
+        jsonDate = json.dumps(Date,indent=1)
+        messenger.sendtext(jsonDate.replace("{","").replace("}","").replace('"',"").replace(",","").strip())
 
 # line_bot_token
 lineBotApi = 'PTbNtC5m+gVfsYzvhp8dBtjkUiwd8jxyv7kxS4RlJpNIunDdedUN0sNXZFtVIB9p0TdLZ5hc50Ax8WskZo3DTceVUBKmRZvVfgK7lR6GmDPDy194G+bjvSWhFru0j4qzC1yc0PK7DaLnPbT75oxR6gdB04t89/1O/w1cDnyilFU='
