@@ -173,7 +173,8 @@ messenger = Sendline(token)
 # messenger.sendtext(result.items())
 
 def sendEachPrice():
-        #dumps json to clean text to print pretty string
+        #dumps json to clean text to print pretty string        
+        jsonDieselB7 = json.dumps(DieselB7,indent=1)
         messenger.sendtext(jsonDieselB7.replace("{","").replace("}","").replace('"',"").replace(",","").strip())
         jsonDiesel = json.dumps(Diesel,indent=1)
         messenger.sendtext(jsonDiesel.replace("{","").replace("}","").replace('"',"").replace(",","").strip())
@@ -191,7 +192,6 @@ def sendEachPrice():
         messenger.sendtext(jsonGasoholE20.replace("{","").replace("}","").replace('"',"").replace(",","").strip())
         jsonGasoholE85 = json.dumps(GasoholE85,indent=1)
         messenger.sendtext(jsonGasoholE85.replace("{","").replace("}","").replace('"',"").replace(",","").strip())
-        jsonDieselB7 = json.dumps(DieselB7,indent=1)
         jsonDate = json.dumps(Date,indent=1)
         messenger.sendtext(jsonDate.replace("{","").replace("}","").replace('"',"").replace(",","").strip())
 
