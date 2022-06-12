@@ -534,6 +534,12 @@ def handle_message(event):
                 meeseekResponse = random.choices(meeseekAns, weights = [1,1,1,1,0.5])
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(meeseekResponse[0]))
+        elif '!add_' in messageText:
+                add_name()
+                line_bot_api.reply_message(event.reply_token,
+                TextSendMessage(addResponse))
+        elif '!edit_' in messageText:
+                edit_data()
 
 # def edit_petch():
 #         payload = request.json
@@ -569,8 +575,8 @@ def add_name():
         payload = request.json
         messageText = payload['events'][0]['message']['text']
         global addResponse
-        global name
         name = messageText.replace("!add_","")
+        account = db.child("accountName").set(name)
         addResponse = "add "+name+" successfully!"
         print(name)
         return name,addResponse
