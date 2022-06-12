@@ -266,11 +266,33 @@ db=firebase.database()
 
 #set data #similar to push
 #data2={}
-# db.child("accountName").child("bell").child("fullName").set("Noppon Meta-awirutruedee")
-#db.child("accountName").child("bell").child("!fullName").set("Noppon Meta-awirutruedee")
-#db.child("accountName").child("toy").child("account").child("promptpay").set("0845353411")
-# db.child("accountName").child("petch").child("!fullName").set("Thachchai Jantarawiwat")
-# db.child("accountName").child("petch").child("fullName").remove()
+#db.child("accountName").child("tar").child("fullName").set("Patchamon Monwimonporn")
+# db.child("accountName").child("tar").child("!fullName").set("Patchamon Monwimonporn")
+# db.child("accountName").child("tar").child("fullName").remove()
+
+# db.child("accountName").child("mon").child("!fullName").set("Pongsakorn Isarapatthanakul")
+# db.child("accountName").child("mon").child("account").child("SCB").set("4029802174")
+# db.child("accountName").child("mon").child("account").child("promptpay").set("0880203451")
+# db.child("accountName").child("mon").child("fullName").remove()
+
+# db.child("accountName").child("fai").child("!fullName").set("Nalinee Boonrueng")
+# db.child('accountName').child("fai").child("fullName").remove()
+
+# db.child("accountName").child("hack").child("!fullName").set("Supanat Akkarawongvisit")
+# db.child('accountName').child("hack").child("fullName").remove()
+
+# db.child("accountName").child("poat").child("!fullName").set("Narathip Thongprathun")
+# db.child('accountName').child("poat").child("fullName").remove()
+
+# db.child("accountName").child("que").child("!fullName").set("Chanin Taweeluthikunchai")
+# db.child('accountName').child("que").child("fullName").remove()
+
+# db.child("accountName").child("ton").child("!fullName").set("Sarannon Srinarongsuk")
+# db.child("accountName").child("ton").child("fullName").remove()
+
+
+#db.child("accountName").child("petch").child("!fullName").set("Thachchai Jantarawiwat")
+
 
 #account = db.child("accountName").get()
 #print(account.val())
