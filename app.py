@@ -561,7 +561,9 @@ def handle_message(event):
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(addResponse))
         elif '!edit_' in messageText:
-                edit_data()
+                edit_name()
+                line_bot_api.reply_message(event.reply_token,
+                TextSendMessage(editResponse))
 
 # def edit_petch():
 #         payload = request.json
@@ -598,10 +600,22 @@ def add_name():
         messageText = payload['events'][0]['message']['text']
         global addResponse
         name = messageText.replace("!add_","")
-        account = db.child("accountName").set(name)
+        db.child("accountName").set(name)
+        db.child("accountName").child(name).set("!fullName")
+        db.child("accountName").child(name).set("account")
         addResponse = "add "+name+" successfully!"
         print(name)
         return name,addResponse
+
+def edit_name():
+        payload = request.json
+        messageText = payload['events'][0]['message']['text']
+        global editResponse
+        nameAndFullName = messageText.replace("!edit_","")
+        editName = db.child("accountName").child()
+        name = nameAndFullName.replace
+        db.child("accountName").child(name).set()
+        return name,editResponse
 
 def edit_data(name):
         payload = request.json
