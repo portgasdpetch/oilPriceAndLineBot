@@ -89,7 +89,7 @@ while(z<30):
         z += 1        
         y += 1        
 Gasohol91 = {"Gasohol91":Gasohol91}
-# print(Gasohol91.copy())
+#print(type(Gasohol91.copy()))
 
 y=0
 z=30        
@@ -244,7 +244,7 @@ sendEachPrice()
 stop_run_continuously = run_continuously()
 
 
-
+import pyrebase
 firebaseConfig = {
     "apiKey": "AIzaSyA26MsLH9zJXW3-ud8wqJM0K4Ce0VSw-q4",
     "authDomain": "meeseeks-34d9f.firebaseapp.com",
@@ -259,6 +259,23 @@ firebaseConfig = {
 firebase=pyrebase.initialize_app(firebaseConfig)
 
 db=firebase.database()
+
+accountName = db.child("accountName").shallow().get()
+print(accountName.val())
+print(list(accountName.val()))
+print(type(accountName.val()))
+x = iter(accountName.val())
+print(next(x))
+print(next(x))
+print(next(x))
+print(next(x))
+print(next(x))
+print(next(x))
+print(next(x))
+print(next(x))
+print(next(x))
+print(next(x))
+print(next(x))
 
 #Push data
 #data2={"name":"John Wick","age":47}
@@ -560,7 +577,7 @@ def handle_message(event):
                 add_name()
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(addResponse))
-        elif '!edit_' in messageText:
+        elif '!edit_'+db.child("accountName").shallow().get() in messageText:
                 edit_name()
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(editResponse))
