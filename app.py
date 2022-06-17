@@ -156,12 +156,7 @@ while(z<100):
 Date={"Date":Date}
 # print(Date.copy())
 
-
 name = ""
-account_data = ""
-petch = ""
-if petch=="":
-        petch = "0198435805\nkbank\nThachchai Jantarawiwat"
 
 from songline import Sendline
 
@@ -261,21 +256,22 @@ firebase=pyrebase.initialize_app(firebaseConfig)
 db=firebase.database()
 
 accountName = db.child("accountName").shallow().get()
-print(accountName.val())
+listAccountName = list(accountName.val())
 print(list(accountName.val()))
-print(type(accountName.val()))
-x = iter(accountName.val())
-print(next(x))
-print(next(x))
-print(next(x))
-print(next(x))
-print(next(x))
-print(next(x))
-print(next(x))
-print(next(x))
-print(next(x))
-print(next(x))
-print(next(x))
+
+# x = iter(accountName.val())
+# print(next(x))
+# print(next(x))
+# print(next(x))
+# print(next(x))
+# print(next(x))
+# print(next(x))
+# print(next(x))
+# print(next(x))
+# print(next(x))
+# print(next(x))
+# print(next(x))
+
 
 #Push data
 #data2={"name":"John Wick","age":47}
@@ -573,11 +569,11 @@ def handle_message(event):
                 meeseekResponse = random.choices(meeseekAns, weights = [1,1,1,1,0.5])
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(meeseekResponse[0]))
-        elif '!add_' in messageText:
+        elif '!add_' in messageText.lower():
                 add_name()
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(addResponse))
-        elif '!edit_'+db.child("accountName").shallow().get() in messageText:
+        elif '!edit_'+(messageText.lower() in listAccountName)+"_" in messageText.lower():
                 edit_name()
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(editResponse))
@@ -629,7 +625,8 @@ def edit_name():
         messageText = payload['events'][0]['message']['text']
         global editResponse
         nameAndFullName = messageText.replace("!edit_","")
-        editName = db.child("accountName").child()
+        onlyName = nameAndFullName in listAccountName
+        editName = db.child("accountName").child(messageText.lower() in listAccountName).set(messageText)
         name = nameAndFullName.replace
         db.child("accountName").child(name).set()
         return name,editResponse
