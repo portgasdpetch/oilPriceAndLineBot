@@ -555,6 +555,12 @@ def handle_message(event):
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(
                         jsonAccount
                 ))
+        elif '!'+(messageText.lower() in listAccountName) in messageText:
+                read_db()
+                print(jsonAccount)
+                line_bot_api.reply_message(event.reply_token,TextSendMessage(
+                        jsonAccount
+                ))
         elif '!help' in messageText.lower():
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage("!account_help\n!gas_help"))     
@@ -625,7 +631,8 @@ def edit_name():
         messageText = payload['events'][0]['message']['text']
         global editResponse
         name_FullName = messageText.replace("!edit_","")
-        onlyName = name_FullName in listAccountName
+        onlyFullName = name_FullName.replace(name_FullName in listAccountName,"")
+        onlyName = name_FullName.replace((not name_FullName) in listAccountName,"")
         editName = db.child("accountName").child(messageText.lower() in listAccountName).set(messageText)
         name = name_FullName.replace
         db.child("accountName").child(name).set()
