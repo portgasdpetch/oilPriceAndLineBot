@@ -451,39 +451,55 @@ def handle_message(event):
                 {getAll.update(Date)}
                 jsonGetAll = json.dumps(getAll,indent=1)
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(jsonGetAll.replace("{","").replace("}","").replace('"',"").replace(",","").strip()))
-        elif '!petch' in messageText.lower() or '!เพชร' in messageText or '@'+petch_display_name+' ขอเลข' in messageText:                
-                read_db()
-                print(jsonAccount)
+        elif '!petch' in messageText.lower() or '!เพชร' in messageText or '@'+petch_display_name+' ขอเลข' in messageText:
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(
-                        jsonAccount
+                        "0198435805\nkbank\Thachchai Jantarawiwat"
                 ))
         elif 'qr_petch' in messageText.lower():
                 line_bot_api.reply_message(event.reply_token,ImageSendMessage(
                 original_content_url="https://firebasestorage.googleapis.com/v0/b/meeseeks-34d9f.appspot.com/o/qr_promptpay%2F1653646122742.jpeg?alt=media&token=fe3fa019-6b27-48bf-bc28-e366b913fffe",
                 preview_image_url="https://firebasestorage.googleapis.com/v0/b/meeseeks-34d9f.appspot.com/o/qr_promptpay%2F1653646122742.jpeg?alt=media&token=fe3fa019-6b27-48bf-bc28-e366b913fffe"))
         elif '!ton' in messageText.lower() or '!ต้น' in messageText:
-                line_bot_api.reply_message(event.reply_token,TextSendMessage("0922616652\npromptpay\nSarannon Srinarongsuk"))
+                line_bot_api.reply_message(event.reply_token,TextSendMessage(
+                        "0922616652\npromptpay\nSarannon Srinarongsuk"
+                        ))
         elif '!toy' in messageText.lower() or '!ทอย' in messageText or '@'+toy_display_name+' ขอเลข' in messageText:
-                line_bot_api.reply_message(event.reply_token,TextSendMessage("2242567291\nTTB\nChutikarn Khampee"))
+                line_bot_api.reply_message(event.reply_token,TextSendMessage(
+                        "2242567291\nTTB\nChutikarn Khampee"
+                        ))
         elif '!jame' in messageText.lower() or '!เจม' in messageText or '@'+jame_display_name+' ขอเลข' in messageText:
-                line_bot_api.reply_message(event.reply_token,TextSendMessage("0273461043\nkbank\nChaiyanat Noodang"))
+                line_bot_api.reply_message(event.reply_token,TextSendMessage(
+                        "0273461043\nkbank\nChaiyanat Noodang"
+                        ))
         elif '!poat' in messageText.lower() or '!โป๊ต' in messageText:
-                line_bot_api.reply_message(event.reply_token,TextSendMessage("0018398265\nkbank\nNarathip Thongprathun"))
+                line_bot_api.reply_message(event.reply_token,TextSendMessage(
+                        "0018398265\nkbank\nNarathip Thongprathun"
+                        ))
         elif '!bell' in messageText.lower() or '!เบล' in messageText:
-                line_bot_api.reply_message(event.reply_token,TextSendMessage("4300831278\nSCB\nNoppon Meta-awirutruedee"))
+                line_bot_api.reply_message(event.reply_token,TextSendMessage(
+                        "4300831278\nSCB\nNoppon Meta-awirutruedee"
+                        ))
         elif '!mon' in messageText.lower() or '!มน' in messageText or '@'+mon_display_name+' ขอเลข' in messageText:
-                line_bot_api.reply_message(event.reply_token,TextSendMessage("0880203451\npromptpay\nPongsakorn Isarapatthanakul"))
+                line_bot_api.reply_message(event.reply_token,TextSendMessage(
+                        "0880203451\npromptpay\nPongsakorn Isarapatthanakul"
+                        ))
         elif '!tar' in messageText.lower() or '!ต้า' in messageText or '@'+tar_display_name+' ขอเลข' in messageText:
-                line_bot_api.reply_message(event.reply_token,TextSendMessage("0802805977\npromptpay\nPatchamon Monwimonporn"))
+                line_bot_api.reply_message(event.reply_token,TextSendMessage(
+                        "0802805977\npromptpay\nPatchamon Monwimonporn"
+                        ))
         elif 'qr_tar' in messageText.lower():
                 line_bot_api.reply_message(event.reply_token,ImageSendMessage(
                 original_content_url='https://firebasestorage.googleapis.com/v0/b/meeseeks-34d9f.appspot.com/o/qr_promptpay%2FD9FDEF12-F3DC-4BE1-BA12-9E195A1E0462.jpg?alt=media&token=200f5f16-eb55-4e45-a1c2-0286dfef5576',
                 preview_image_url='https://firebasestorage.googleapis.com/v0/b/meeseeks-34d9f.appspot.com/o/qr_promptpay%2FD9FDEF12-F3DC-4BE1-BA12-9E195A1E0462.jpg?alt=media&token=200f5f16-eb55-4e45-a1c2-0286dfef5576'
                 ))
         elif '!fai' in messageText.lower() or '!ฝ้าย' in messageText:
-                line_bot_api.reply_message(event.reply_token,TextSendMessage("0658068512\nkbank\nNalinee Boonrueng"))
+                line_bot_api.reply_message(event.reply_token,TextSendMessage(
+                        "0658068512\nkbank\nNalinee Boonrueng"
+                        ))
         elif '!que' in messageText.lower() or '!คิว' in messageText or '@'+que_display_name+' ขอเลข' in messageText:
-                line_bot_api.reply_message(event.reply_token,TextSendMessage("0944412122\npromptpay\nChanin Taweeluthikunchai"))
+                line_bot_api.reply_message(event.reply_token,TextSendMessage(
+                        "0944412122\npromptpay\nChanin Taweeluthikunchai"
+                        ))
         elif '!help' in messageText.lower():
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage("!account_help\n!gas_help"))     
