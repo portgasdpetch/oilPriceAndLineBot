@@ -630,12 +630,11 @@ def edit_name():
         payload = request.json
         messageText = payload['events'][0]['message']['text']
         global editResponse
-        name_FullName = messageText.replace("!edit_","")
-        onlyFullName = name_FullName.replace(name_FullName in listAccountName,"")
-        onlyName = name_FullName.replace((not name_FullName) in listAccountName,"")
-        editName = db.child("accountName").child(messageText.lower() in listAccountName).set(messageText)
-        name = name_FullName.replace
-        db.child("accountName").child(name).set()
+        splitString = messageText.split("_")
+        onlyFullName = splitString[2]
+        onlyName = splitString[1]
+        editFullName = db.child("accountName").child(splitString[1]).child("!fullName").set(splitString[2])
+        editResponse = "edit "+splitString[1]+" successfully!"
         return name,editResponse
 
 def edit_data(name):
