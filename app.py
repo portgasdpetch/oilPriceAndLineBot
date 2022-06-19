@@ -259,19 +259,18 @@ accountName = db.child("accountName").shallow().get()
 listAccountName = list(accountName.val())
 print(list(accountName.val()))
 
-# x = iter(accountName.val())
-# print(next(x))
-# print(next(x))
-# print(next(x))
-# print(next(x))
-# print(next(x))
-# print(next(x))
-# print(next(x))
-# print(next(x))
-# print(next(x))
-# print(next(x))
-# print(next(x))
 
+# listAccountName2 = ['mon', 'poat', 'ton', 'jame', 'petch', 'bell', 'hack', 'fai', 'que', 'tar', 'toy']
+# stringAccountName2 = 'monpoattonjamepetchbellhackfaiquetartoy'
+# strList = str(listAccountName2.copy())
+# strListReplace = strList.replace("[","").replace("]","").replace("'","").replace(",","")
+# s = 'fai312321'
+# if s in stringAccountName2:
+#         print("Yeah")
+#         print(s)
+# else:
+#         print("No")
+#         print(stringAccountName2)
 
 #Push data
 #data2={"name":"John Wick","age":47}
@@ -338,7 +337,8 @@ def callback():
                 messageText = payload['events'][0]['message']['text'] 
                 print(messageText) 
                 print(payload['events'][0]['message']['type'])
-                print(type(payload['events'][0]['message']['type']))
+                # print(type(payload['events'][0]['message']['type']))
+                print(type(messageText))
 
                 # typerId = payload['events'][0]['source']['userId']
                 # print(typerId)
@@ -555,12 +555,12 @@ def handle_message(event):
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(
                         jsonAccount
                 ))
-        elif '!'+(messageText.lower() in listAccountName) in messageText:
-                read_db()
-                print(jsonAccount)
-                line_bot_api.reply_message(event.reply_token,TextSendMessage(
-                        jsonAccount
-                ))
+        # elif '!'+(messageText.lower() in listAccountName) in messageText:
+        #         read_db()
+        #         print(jsonAccount)
+        #         line_bot_api.reply_message(event.reply_token,TextSendMessage(
+        #                 jsonAccount
+        #         ))
         elif '!help' in messageText.lower():
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage("!account_help\n!gas_help"))     
@@ -596,7 +596,8 @@ def handle_message(event):
 def read_db():
         payload = request.json
         messageText = payload['events'][0]['message']['text']
-        name = messageText.replace("!","")
+        nameAndMesseageText = messageText.replace("!","")
+        name = nameAndMesseageText in messageText.lower()
         account = db.child("accountName").child(name).get()
         ascendingDict = {}
         ascendingDict.update(account.val())
