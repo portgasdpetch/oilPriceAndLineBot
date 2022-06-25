@@ -259,6 +259,12 @@ accountName = db.child("accountName").shallow().get()
 listAccountName = list(accountName.val())
 print(list(accountName.val()))
 
+# tarData = {"promptpay": "0802805977","KKP":"2006154402"}
+# tarDb = db.child("accountName").child("tar").child("account").get()
+# print(tarDb.val())
+
+#tarDb = db.child("accountName").child("tar").child("account").child("KKP")
+
 
 # listAccountName2 = ['mon', 'poat', 'ton', 'jame', 'petch', 'bell', 'hack', 'fai', 'que', 'tar', 'toy']
 # stringAccountName2 = 'monpoattonjamepetchbellhackfaiquetartoy'
