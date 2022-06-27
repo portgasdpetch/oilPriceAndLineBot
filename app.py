@@ -340,7 +340,6 @@ def callback():
     payload = request.json
     print(payload)
 
-
     # make verification on LineDev to success when there is no event(verifying will send an empty event)
     if (payload['events'])!=([]):        
         if(payload['events'][0]['message']['type']=='text'):
