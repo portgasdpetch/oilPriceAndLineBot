@@ -24,6 +24,7 @@ import tempfile
 import threading
 import pyrebase
 import yaml
+import re
 from argparse import ArgumentParser
 from flask import Flask, request, abort
 from linebot import (
@@ -561,12 +562,13 @@ def handle_message(event):
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(
                         jsonAccount
                 ))
-        # elif '!'+(messageText.lower() in listAccountName) in messageText:
-        #         read_db()
-        #         print(jsonAccount)
-        #         line_bot_api.reply_message(event.reply_token,TextSendMessage(
-        #                 jsonAccount
-        #         ))
+        elif '!'+re.search("petch|tar|toy|fai|que|mon|jame|gong|ton|hack|poat|bell"
+        ,messageText.lower()) in messageText.lower():
+                read_db(messageText)
+                print(jsonAccount)
+                line_bot_api.reply_message(event.reply_token,TextSendMessage(
+                        jsonAccount
+                ))
         elif '!help' in messageText.lower():
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage("!account_help\n!gas_help"))     
@@ -585,7 +587,7 @@ def handle_message(event):
                 add_name()
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(addResponse))
-        elif '!edit_'+(messageText.lower() in listAccountName)+"_" in messageText.lower():
+        elif '!edit_' in messageText.lower():
                 edit_name()
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(editResponse))
@@ -599,27 +601,30 @@ def handle_message(event):
 #         editObject = "edit successfully!"
 #         return petch,editObject
 
-def read_db():
-        payload = request.json
-        messageText = payload['events'][0]['message']['text']
+def read_db(messageText):
         nameAndMesseageText = messageText.replace("!","")
-        name = nameAndMesseageText in messageText.lower()
-        account = db.child("accountName").child(name).get()
-        ascendingDict = {}
-        ascendingDict.update(account.val())
-        print(account.val())
-        print(ascendingDict)
-        #use lambda function to keep the key and value of the dict, or only the keys are rest
-        descendingDict = sorted(ascendingDict.items(),key = lambda x: x,
-        reverse=True)
-        print(descendingDict)
-        global jsonAccount 
-        #jsonAccount = json.dumps(descendingDict,separators=(',',':'),indent=1)
-        #jsonAccount = yaml.dump(descendingDict,default_flow_style=False)
-        jsonAccount = json.dumps(account.val(),indent=1)
-        jsonAccount = jsonAccount.replace("[","").replace("]","").replace('"',
-        "").replace(",","").replace("{","").replace("}","").strip()
-        jsonAccount = jsonAccount.replace("account","Account").replace("!fullName","Full Name")
+        nameGroup = re.search("petch|tar|toy|fai|que|mon|jame|gong|ton|hack|poat|bell"
+        ,nameAndMesseageText)
+        name = nameGroup.group()
+        if (name):
+                account = db.child("accountName").child(name).get()
+                ascendingDict = {}
+                ascendingDict.update(account.val())
+                print(account.val())
+                print(ascendingDict)
+                #use lambda function to keep the key and value of the dict, or only the keys are rest
+                descendingDict = sorted(ascendingDict.items(),key = lambda x: x,
+                reverse=True)
+                print(descendingDict)
+                global jsonAccount 
+                #jsonAccount = json.dumps(descendingDict,separators=(',',':'),indent=1)
+                #jsonAccount = yaml.dump(descendingDict,default_flow_style=False)
+                jsonAccount = json.dumps(account.val(),indent=1)
+                jsonAccount = jsonAccount.replace("[","").replace("]","").replace('"',
+                "").replace(",","").replace("{","").replace("}","").strip()
+                jsonAccount = jsonAccount.replace("account","Account").replace("!fullName","Full Name")
+        else :
+                pass
         
 def add_name():
         payload = request.json
