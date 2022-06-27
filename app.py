@@ -35,9 +35,6 @@ from linebot.exceptions import (
 )
 from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage,ImageSendMessage)
-    
-
-
 
 opt = webdriver.ChromeOptions()
 opt.add_argument('headless')
@@ -237,7 +234,7 @@ sendEachPrice()
 # Start the background thread
 stop_run_continuously = run_continuously()
 
-
+import re
 import pyrebase
 firebaseConfig = {
     "apiKey": "AIzaSyA26MsLH9zJXW3-ud8wqJM0K4Ce0VSw-q4",
@@ -250,6 +247,8 @@ firebaseConfig = {
     "measurementId": "G-2NR908DJPB"
     }
 
+txt = "The rain in Spain"
+
 firebase=pyrebase.initialize_app(firebaseConfig)
 
 db=firebase.database()
@@ -260,6 +259,10 @@ print(list(accountName.val()))
 
 regExListAccountName = "\""+"|".join(listAccountName)+"\""
 print(regExListAccountName)
+
+# x=re.search("ai",txt)
+# print(re.search("ai",txt))
+# print(type(x.group()))
 
 
 
@@ -496,6 +499,19 @@ def handle_message(event):
                 {getAll.update(Date)}
                 jsonGetAll = json.dumps(getAll,indent=1)
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(jsonGetAll.replace("{","").replace("}","").replace('"',"").replace(",","").strip()))
+
+        elif '!'+(re.search(regExListAccountName
+        ,messageText.lower()).group()) in messageText.lower():
+                if (type(re.search(regExListAccountName
+                ,messageText.lower()))!=None):
+                        read_db(messageText.lower())
+                        print(jsonAccount)
+                        line_bot_api.reply_message(event.reply_token,TextSendMessage(
+                                jsonAccount
+                        ))
+                elif (type(re.search(regExListAccountName
+                ,messageText.lower()))==None):
+                        pass
         elif '!petch' in messageText.lower() or '!เพชร' in messageText or '@'+petch_display_name+' ขอเลข' in messageText:                
                 read_db()
                 print(jsonAccount)
@@ -543,7 +559,7 @@ def handle_message(event):
                         jsonAccount
                 ))
         elif '!tar' in messageText.lower() or '!ต้า' in messageText or '@'+tar_display_name+' ขอเลข' in messageText:
-                read_db()
+                read_db(messageText.lower())
                 print(jsonAccount)
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(
                         jsonAccount
@@ -565,13 +581,6 @@ def handle_message(event):
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(
                         jsonAccount
                 ))
-        elif '!'+re.search(regExListAccountName
-        ,messageText.lower()) in messageText.lower():
-                read_db(messageText)
-                print(jsonAccount)
-                line_bot_api.reply_message(event.reply_token,TextSendMessage(
-                        jsonAccount
-                ))
         elif '!help' in messageText.lower():
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage("!account_help\n!gas_help"))     
@@ -587,13 +596,19 @@ def handle_message(event):
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(meeseekResponse[0]))
         elif '!add_' in messageText.lower():
-                add_name()
+                add_name(messageText.lower())
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(addResponse))
-        elif '!edit_' in messageText.lower():
-                edit_name()
+        elif '!edit_'+re.search(regExListAccountName
+        ,messageText.lower())+'_' in messageText.lower():
+                edit_name(messageText.lower())
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(editResponse))
+        elif '!delete_'+re.search(regExListAccountName
+        ,messageText.lower()) in messageText.lower():
+                delete_name(messageText.lower())
+                line_bot_api.reply_message(event.reply_token,
+                TextSendMessage(deleteResponse))
 
 # def edit_petch():
 #         payload = request.json
@@ -629,28 +644,41 @@ def read_db(messageText):
         else :
                 pass
         
-def add_name():
-        payload = request.json
-        messageText = payload['events'][0]['message']['text']
+def add_name(messageText):
         global addResponse
-        name = messageText.replace("!add_","")
-        db.child("accountName").set(name)
-        db.child("accountName").child(name).set("!fullName")
-        db.child("accountName").child(name).set("account")
-        addResponse = "add "+name+" successfully!"
-        print(name)
-        return name,addResponse
+        splitString = messageText.split("_")
+        onlyName = splitString[1]
+        db.child("accountName").set(onlyName)
+        db.child("accountName").child(onlyName).set("!fullName")
+        db.child("accountName").child(onlyName).set("account")
+        addResponse = "add "+onlyName+" successfully!"
+        print(onlyName)
+        return onlyName,addResponse
 
-def edit_name():
-        payload = request.json
-        messageText = payload['events'][0]['message']['text']
+def edit_name(messageText):
         global editResponse
         splitString = messageText.split("_")
         onlyFullName = splitString[2]
         onlyName = splitString[1]
-        editFullName = db.child("accountName").child(splitString[1]).child("!fullName").set(splitString[2])
-        editResponse = "edit "+splitString[1]+" successfully!"
-        return name,editResponse
+        if re.search(regExListAccountName,onlyName):
+                editFullName = db.child("accountName").child(splitString[1]).child("!fullName").set(splitString[2])
+                editResponse = "edit "+splitString[1]+" successfully!"
+                return editResponse
+        else :
+                editResponse = splitString[1] +" not found"
+                return editResponse
+
+def delete_name(messageText):
+        global deleteResponse
+        splitString = messageText.split("_")
+        onlyName = splitString[1]
+        if re.search(regExListAccountName,onlyName):
+                db.child("accountName").child(splitString[1]).remove()
+                deleteResponse = "delete "+splitString[1]+" successfully!"
+                return deleteResponse
+        else :
+                deleteResponse = splitString[1] +" not found"
+                return deleteResponse
 
 def edit_data(name):
         payload = request.json
