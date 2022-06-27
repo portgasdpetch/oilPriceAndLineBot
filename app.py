@@ -316,7 +316,6 @@ print(regExListAccountName)
 
 #db.child("accountName").child("petch").child("!fullName").set("Thachchai Jantarawiwat")
 
-
 #account = db.child("accountName").get()
 #print(account.val())
 
