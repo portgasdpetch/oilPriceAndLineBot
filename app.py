@@ -264,8 +264,6 @@ print(regExListAccountName)
 # print(re.search("ai",txt))
 # print(type(x.group()))
 
-
-
 # tarData = {"promptpay": "0802805977","KKP":"2006154402"}
 # tarDb = db.child("accountName").child("tar").child("account").get()
 # print(tarDb.val())
