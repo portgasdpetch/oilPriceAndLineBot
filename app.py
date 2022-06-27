@@ -247,7 +247,6 @@ firebaseConfig = {
     "measurementId": "G-2NR908DJPB"
     }
 
-txt = "The rain in Spain"
 
 firebase=pyrebase.initialize_app(firebaseConfig)
 
@@ -257,12 +256,16 @@ accountName = db.child("accountName").shallow().get()
 listAccountName = list(accountName.val())
 print(list(accountName.val()))
 
+# justJoin = " ".join(listAccountName)
+# print(justJoin)
 regExListAccountName = "\""+"|".join(listAccountName)+"\""
-print(regExListAccountName)
+# print(regExListAccountName)
 
-# x=re.search("ai",txt)
-# print(re.search("ai",txt))
-# print(type(x.group()))
+# x=re.search("mon",regExListAccountName)
+# if ('!'+re.search("mon",regExListAccountName).group()):
+#         print(x)
+#         print(x.group())
+#         print(type(x.group()))
 
 # tarData = {"promptpay": "0802805977","KKP":"2006154402"}
 # tarDb = db.child("accountName").child("tar").child("account").get()
@@ -310,8 +313,8 @@ print(regExListAccountName)
 # db.child("accountName").child("que").child("!fullName").set("Chanin Taweeluthikunchai")
 # db.child('accountName').child("que").child("fullName").remove()
 
-# db.child("accountName").child("ton").child("!fullName").set("Sarannon Srinarongsuk")
-# db.child("accountName").child("ton").child("fullName").remove()
+# db.child("accountName").child("jame").child("!fullName").set("Chaiyanat Noodang")
+# db.child("accountName").child("jame").child("fullName").remove()
 
 
 #db.child("accountName").child("petch").child("!fullName").set("Thachchai Jantarawiwat")
