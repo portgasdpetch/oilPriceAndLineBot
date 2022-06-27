@@ -259,7 +259,7 @@ print(list(accountName.val()))
 # justJoin = " ".join(listAccountName)
 # print(justJoin)
 regExListAccountName = "\""+"|".join(listAccountName)+"\""
-# print(regExListAccountName)
+print(regExListAccountName)
 
 # x=re.search("mon",regExListAccountName)
 # if ('!'+re.search("mon",regExListAccountName).group()):
@@ -498,9 +498,20 @@ def handle_message(event):
                 {getAll.update(Date)}
                 jsonGetAll = json.dumps(getAll,indent=1)
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(jsonGetAll.replace("{","").replace("}","").replace('"',"").replace(",","").strip()))
-
-        elif '!'+(re.search(regExListAccountName
-        ,messageText.lower()).group()) in messageText.lower():
+        elif '!mon' in messageText.lower() or '!มน' in messageText or '@'+mon_display_name+' ขอเลข' in messageText:
+                read_db(messageText.lower())
+                print(jsonAccount)
+                line_bot_api.reply_message(event.reply_token,TextSendMessage(
+                        jsonAccount
+                ))
+        elif '!toy' in messageText.lower() or '!ทอย' in messageText or '@'+toy_display_name+' ขอเลข' in messageText:
+                read_db(messageText.lower())
+                print(jsonAccount)
+                line_bot_api.reply_message(event.reply_token,TextSendMessage(
+                        jsonAccount
+                ))
+        elif '!'+re.search(regExListAccountName
+        ,messageText.lower()).group() in messageText.lower():
                 if (type(re.search(regExListAccountName
                 ,messageText.lower()))!=None):
                         read_db(messageText.lower())
@@ -527,12 +538,7 @@ def handle_message(event):
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(
                         jsonAccount
                 ))
-        elif '!toy' in messageText.lower() or '!ทอย' in messageText or '@'+toy_display_name+' ขอเลข' in messageText:
-                read_db()
-                print(jsonAccount)
-                line_bot_api.reply_message(event.reply_token,TextSendMessage(
-                        jsonAccount
-                ))
+
         elif '!jame' in messageText.lower() or '!เจม' in messageText or '@'+jame_display_name+' ขอเลข' in messageText:
                 read_db()
                 print(jsonAccount)
@@ -551,12 +557,7 @@ def handle_message(event):
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(
                         jsonAccount
                 ))
-        elif '!mon' in messageText.lower() or '!มน' in messageText or '@'+mon_display_name+' ขอเลข' in messageText:
-                read_db()
-                print(jsonAccount)
-                line_bot_api.reply_message(event.reply_token,TextSendMessage(
-                        jsonAccount
-                ))
+
         elif '!tar' in messageText.lower() or '!ต้า' in messageText or '@'+tar_display_name+' ขอเลข' in messageText:
                 read_db(messageText.lower())
                 print(jsonAccount)
