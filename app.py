@@ -157,8 +157,6 @@ while(z<100):
 Date={"Date":Date}
 # print(Date.copy())
 
-name = ""
-
 from songline import Sendline
 
 # line_notify_token
@@ -259,6 +257,11 @@ db=firebase.database()
 accountName = db.child("accountName").shallow().get()
 listAccountName = list(accountName.val())
 print(list(accountName.val()))
+
+regExListAccountName = "\""+"|".join(listAccountName)+"\""
+print(regExListAccountName)
+
+
 
 # tarData = {"promptpay": "0802805977","KKP":"2006154402"}
 # tarDb = db.child("accountName").child("tar").child("account").get()
@@ -562,7 +565,7 @@ def handle_message(event):
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(
                         jsonAccount
                 ))
-        elif '!'+re.search("petch|tar|toy|fai|que|mon|jame|gong|ton|hack|poat|bell"
+        elif '!'+re.search(regExListAccountName
         ,messageText.lower()) in messageText.lower():
                 read_db(messageText)
                 print(jsonAccount)
@@ -603,7 +606,7 @@ def handle_message(event):
 
 def read_db(messageText):
         nameAndMesseageText = messageText.replace("!","")
-        nameGroup = re.search("petch|tar|toy|fai|que|mon|jame|gong|ton|hack|poat|bell"
+        nameGroup = re.search(regExListAccountName
         ,nameAndMesseageText)
         name = nameGroup.group()
         if (name):
