@@ -256,10 +256,14 @@ accountName = db.child("accountName").shallow().get()
 listAccountName = list(accountName.val())
 print(list(accountName.val()))
 
-# justJoin = " ".join(listAccountName)
+#justJoin = " ".join(listAccountName)
 # print(justJoin)
-regExListAccountName = "\""+"|".join(listAccountName)+"\""
-print(regExListAccountName)
+joinedListAccountName = "|".join(listAccountName)
+print(joinedListAccountName)
+
+#not use because it does not need the double quote
+# regExListAccountName = "\""+"|".join(listAccountName)+"\"" 
+# print(regExListAccountName)
 
 # x=re.search("mon",regExListAccountName)
 # if ('!'+re.search("mon",regExListAccountName).group()):
@@ -498,6 +502,28 @@ def handle_message(event):
                 {getAll.update(Date)}
                 jsonGetAll = json.dumps(getAll,indent=1)
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(jsonGetAll.replace("{","").replace("}","").replace('"',"").replace(",","").strip()))
+        elif ('!'+re.search(joinedListAccountName
+        ,messageText.lower()).group()) in messageText.lower():
+                if (type(re.search(joinedListAccountName
+                ,messageText.lower()))!=None):
+                        read_db(messageText.lower())
+                        print(jsonAccount)
+                        line_bot_api.reply_message(event.reply_token,TextSendMessage(
+                                jsonAccount
+                        ))
+                elif (type(re.search(joinedListAccountName
+                ,messageText.lower()))==None):
+                        pass
+        elif '!petch' in messageText.lower() or '!เพชร' in messageText or '@'+petch_display_name+' ขอเลข' in messageText:                
+                read_db(messageText.lower())
+                print(jsonAccount)
+                line_bot_api.reply_message(event.reply_token,TextSendMessage(
+                        jsonAccount
+                ))
+        elif 'qr_petch' in messageText.lower():
+                line_bot_api.reply_message(event.reply_token,ImageSendMessage(
+                original_content_url="https://firebasestorage.googleapis.com/v0/b/meeseeks-34d9f.appspot.com/o/qr_promptpay%2F1653646122742.jpeg?alt=media&token=fe3fa019-6b27-48bf-bc28-e366b913fffe",
+                preview_image_url="https://firebasestorage.googleapis.com/v0/b/meeseeks-34d9f.appspot.com/o/qr_promptpay%2F1653646122742.jpeg?alt=media&token=fe3fa019-6b27-48bf-bc28-e366b913fffe"))
         elif '!mon' in messageText.lower() or '!มน' in messageText or '@'+mon_display_name+' ขอเลข' in messageText:
                 read_db(messageText.lower())
                 print(jsonAccount)
@@ -510,28 +536,6 @@ def handle_message(event):
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(
                         jsonAccount
                 ))
-        elif '!'+re.search(regExListAccountName
-        ,messageText.lower()).group() in messageText.lower():
-                if (type(re.search(regExListAccountName
-                ,messageText.lower()))!=None):
-                        read_db(messageText.lower())
-                        print(jsonAccount)
-                        line_bot_api.reply_message(event.reply_token,TextSendMessage(
-                                jsonAccount
-                        ))
-                elif (type(re.search(regExListAccountName
-                ,messageText.lower()))==None):
-                        pass
-        elif '!petch' in messageText.lower() or '!เพชร' in messageText or '@'+petch_display_name+' ขอเลข' in messageText:                
-                read_db()
-                print(jsonAccount)
-                line_bot_api.reply_message(event.reply_token,TextSendMessage(
-                        jsonAccount
-                ))
-        elif 'qr_petch' in messageText.lower():
-                line_bot_api.reply_message(event.reply_token,ImageSendMessage(
-                original_content_url="https://firebasestorage.googleapis.com/v0/b/meeseeks-34d9f.appspot.com/o/qr_promptpay%2F1653646122742.jpeg?alt=media&token=fe3fa019-6b27-48bf-bc28-e366b913fffe",
-                preview_image_url="https://firebasestorage.googleapis.com/v0/b/meeseeks-34d9f.appspot.com/o/qr_promptpay%2F1653646122742.jpeg?alt=media&token=fe3fa019-6b27-48bf-bc28-e366b913fffe"))
         elif '!ton' in messageText.lower() or '!ต้น' in messageText:
                 read_db()
                 print(jsonAccount)
@@ -599,13 +603,13 @@ def handle_message(event):
                 add_name(messageText.lower())
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(addResponse))
-        elif '!edit_'+re.search(regExListAccountName
-        ,messageText.lower())+'_' in messageText.lower():
+        elif '!edit_'+re.search(joinedListAccountName
+        ,messageText.lower()).group()+'_' in messageText.lower():
                 edit_name(messageText.lower())
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(editResponse))
-        elif '!delete_'+re.search(regExListAccountName
-        ,messageText.lower()) in messageText.lower():
+        elif '!delete_'+re.search(joinedListAccountName
+        ,messageText.lower()).group() in messageText.lower():
                 delete_name(messageText.lower())
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(deleteResponse))
@@ -621,9 +625,11 @@ def handle_message(event):
 
 def read_db(messageText):
         nameAndMesseageText = messageText.replace("!","")
-        nameGroup = re.search(regExListAccountName
+        nameGroup = re.search(joinedListAccountName
         ,nameAndMesseageText)
+        print(nameGroup)
         name = nameGroup.group()
+        print(name)
         if (name):
                 account = db.child("accountName").child(name).get()
                 ascendingDict = {}
@@ -660,7 +666,7 @@ def edit_name(messageText):
         splitString = messageText.split("_")
         onlyFullName = splitString[2]
         onlyName = splitString[1]
-        if re.search(regExListAccountName,onlyName):
+        if re.search(joinedListAccountName,onlyName):
                 editFullName = db.child("accountName").child(splitString[1]).child("!fullName").set(splitString[2])
                 editResponse = "edit "+splitString[1]+" successfully!"
                 return editResponse
@@ -672,7 +678,7 @@ def delete_name(messageText):
         global deleteResponse
         splitString = messageText.split("_")
         onlyName = splitString[1]
-        if re.search(regExListAccountName,onlyName):
+        if re.search(joinedListAccountName,onlyName):
                 db.child("accountName").child(splitString[1]).remove()
                 deleteResponse = "delete "+splitString[1]+" successfully!"
                 return deleteResponse
