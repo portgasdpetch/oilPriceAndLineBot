@@ -296,32 +296,49 @@ print(joinedListAccountName)
 
 #set data #similar to push
 #data2={}
-#db.child("accountName").child("tar").child("fullName").set("Patchamon Monwimonporn")
+
 # db.child("accountName").child("tar").child("!fullName").set("Patchamon Monwimonporn")
-# db.child("accountName").child("tar").child("fullName").remove()
+# db.child("accountName").child("tar").child("account").set({"Promptpay":"0802805977","KKP":"2006154402"})
+# # db.child("accountName").child("tar").child("fullName").remove()
 
 # db.child("accountName").child("mon").child("!fullName").set("Pongsakorn Isarapatthanakul")
 # db.child("accountName").child("mon").child("account").child("SCB").set("4029802174")
-# db.child("accountName").child("mon").child("account").child("promptpay").set("0880203451")
-# db.child("accountName").child("mon").child("fullName").remove()
+# db.child("accountName").child("mon").child("account").child("Promptpay").set("0880203451")
+db.child("accountName").child("mon").child("account").child("promptpay").remove()
+
+db.child("accountName").child("gong").remove()
 
 # db.child("accountName").child("fai").child("!fullName").set("Nalinee Boonrueng")
-# db.child('accountName').child("fai").child("fullName").remove()
+# db.child("accountName").child("fai").child("account").set({"Kbank":"658068512"})
+# # db.child('accountName').child("fai").child("fullName").remove()
 
 # db.child("accountName").child("hack").child("!fullName").set("Supanat Akkarawongvisit")
-# db.child('accountName').child("hack").child("fullName").remove()
+# # db.child('accountName').child("hack").child("fullName").remove()
 
 # db.child("accountName").child("poat").child("!fullName").set("Narathip Thongprathun")
+# db.child("accountName").child("poat").child("account").set({"Kbank":"0018398265"})
 # db.child('accountName').child("poat").child("fullName").remove()
 
 # db.child("accountName").child("que").child("!fullName").set("Chanin Taweeluthikunchai")
-# db.child('accountName').child("que").child("fullName").remove()
+# db.child("accountName").child("que").child("account").child("Promptpay").set("0880203451")
+# # db.child('accountName').child("que").child("fullName").remove()
 
 # db.child("accountName").child("jame").child("!fullName").set("Chaiyanat Noodang")
-# db.child("accountName").child("jame").child("fullName").remove()
+# db.child("accountName").child("jame").child("account").set({"Kbank":"0273461043"})
+# # db.child("accountName").child("jame").child("fullName").remove()
 
 
-#db.child("accountName").child("petch").child("!fullName").set("Thachchai Jantarawiwat")
+# db.child("accountName").child("petch").child("!fullName").set("Thachchai Jantarawiwat")
+# db.child("accountName").child("petch").child("account").set({"Kbank":"0198435805","Promptpay":"0823379539"})
+
+# db.child("accountName").child("ton").child("!fullName").set("Sarannon Srinarongsuk")
+# db.child("accountName").child("ton").child("account").set({"Promptpay":"0922616652"})
+
+# db.child("accountName").child("bell").child("!fullName").set("Noppon Meta-awirutruedee")
+# db.child("accountName").child("bell").child("account").set({"SCB":"4300831278"})
+
+# db.child("accountName").child("toy").child("!fullName").set("Chutikarn Khampee")
+# db.child("accountName").child("toy").child("account").set({"Promptpay":"0845353411","TTB":"2242567291"})
 
 #account = db.child("accountName").get()
 #print(account.val())
@@ -657,9 +674,8 @@ def add_name(messageText):
         global addResponse
         splitString = messageText.split("_")
         onlyName = splitString[1]
-        db.child("accountName").set(onlyName)
-        db.child("accountName").child(onlyName).set("!fullName")
-        db.child("accountName").child(onlyName).set("account")
+        db.child("accountName").child(onlyName).child("!fullName")
+        db.child("accountName").child(onlyName).child("account")
         addResponse = "add "+onlyName+" successfully!"
         print(onlyName)
         return onlyName,addResponse
