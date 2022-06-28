@@ -304,8 +304,10 @@ print(joinedListAccountName)
 # db.child("accountName").child("mon").child("!fullName").set("Pongsakorn Isarapatthanakul")
 # db.child("accountName").child("mon").child("account").child("SCB").set("4029802174")
 # db.child("accountName").child("mon").child("account").child("Promptpay").set("0880203451")
-db.child("accountName").child("mon").child("account").child("promptpay").remove()
+# db.child("accountName").child("mon").child("account").child("promptpay").remove()
 
+db.child("accountName").child("gong").child("!fullName").set("")
+db.child("accountName").child("gong").child("account").set("")
 db.child("accountName").child("gong").remove()
 
 # db.child("accountName").child("fai").child("!fullName").set("Nalinee Boonrueng")
