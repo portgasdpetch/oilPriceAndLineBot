@@ -502,8 +502,9 @@ def handle_message(event):
                 {getAll.update(Date)}
                 jsonGetAll = json.dumps(getAll,indent=1)
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(jsonGetAll.replace("{","").replace("}","").replace('"',"").replace(",","").strip()))
-        elif ('!'+re.search(joinedListAccountName
-        ,messageText.lower()).group()) in messageText.lower():
+        elif re.search(joinedListAccountName
+        ,messageText.lower()) != None and ('!'+(re.search(joinedListAccountName
+        ,messageText.lower()).group()) in messageText.lower()) :
                 if (type(re.search(joinedListAccountName
                 ,messageText.lower()))!=None):
                         read_db(messageText.lower())
@@ -603,12 +604,14 @@ def handle_message(event):
                 add_name(messageText.lower())
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(addResponse))
-        elif '!edit_'+re.search(joinedListAccountName
+        elif  re.search(joinedListAccountName
+        ,messageText.lower()) != None and '!edit_'+re.search(joinedListAccountName
         ,messageText.lower()).group()+'_' in messageText.lower():
                 edit_name(messageText.lower())
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(editResponse))
-        elif '!delete_'+re.search(joinedListAccountName
+        elif  re.search(joinedListAccountName
+        ,messageText.lower()) != None and '!delete_'+re.search(joinedListAccountName
         ,messageText.lower()).group() in messageText.lower():
                 delete_name(messageText.lower())
                 line_bot_api.reply_message(event.reply_token,
