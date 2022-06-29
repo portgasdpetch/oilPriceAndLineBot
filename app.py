@@ -6,6 +6,7 @@ from email import message
 from mmap import ACCESS_DEFAULT
 from multiprocessing import Event
 import random
+from shlex import split
 from telnetlib import GA
 from unicodedata import decomposition
 from selenium import webdriver
@@ -306,9 +307,9 @@ print(joinedListAccountName)
 # db.child("accountName").child("mon").child("account").child("Promptpay").set("0880203451")
 # db.child("accountName").child("mon").child("account").child("promptpay").remove()
 
-db.child("accountName").child("gong").child("!fullName").set("")
-db.child("accountName").child("gong").child("account").set("")
-db.child("accountName").child("gong").remove()
+# db.child("accountName").child("gong").child("!fullName").set("")
+# db.child("accountName").child("gong").child("account").set("")
+# db.child("accountName").child("gong").remove()
 
 # db.child("accountName").child("fai").child("!fullName").set("Nalinee Boonrueng")
 # db.child("accountName").child("fai").child("account").set({"Kbank":"658068512"})
@@ -620,7 +621,7 @@ def handle_message(event):
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(meeseekResponse[0]))
         elif '!add_' in messageText.lower():
-                add_name(messageText.lower())
+                add_name(messageText)
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(addResponse))
         elif  re.search(joinedListAccountName
@@ -675,12 +676,33 @@ def read_db(messageText):
 def add_name(messageText):
         global addResponse
         splitString = messageText.split("_")
-        onlyName = splitString[1]
-        db.child("accountName").child(onlyName).child("!fullName")
-        db.child("accountName").child(onlyName).child("account")
-        addResponse = "add "+onlyName+" successfully!"
-        print(onlyName)
-        return onlyName,addResponse
+        if len(splitString)==1:
+                addResponse = "Please type a name after the \"_\""
+                return addResponse
+        elif len(splitString)==2:
+                onlyName = splitString[1]
+                db.child("accountName").child(onlyName).child("!fullName").set("")
+                db.child("accountName").child(onlyName).child("account").set("")
+                addResponse = "add "+onlyName+" successfully!"
+                return onlyName,addResponse
+        elif len(splitString)==3:
+                onlyName = splitString[1]
+                db.child("accountName").child(onlyName).child("!fullName").set(splitString[2])
+                db.child("accountName").child(onlyName).child("account").set("")
+                addResponse = "add "+onlyName+" successfully!"
+                return onlyName,addResponse
+        elif len(splitString)==4:
+                onlyName = splitString[1]
+                db.child("accountName").child(onlyName).child("!fullName").set(splitString[2])
+                db.child("accountName").child(onlyName).child("account").child(splitString[3].capitalize().set(""))
+                addResponse = "add "+onlyName+" successfully!"
+                return onlyName,addResponse
+        elif len(splitString)==5:
+                onlyName = splitString[1]
+                db.child("accountName").child(onlyName).child("!fullName").set(splitString[2])
+                db.child("accountName").child(onlyName).child("account").child(splitString[3].capitalize()).set(splitString[4].capitalize())
+                addResponse = "add "+onlyName+" successfully!"
+                return onlyName,addResponse
 
 def edit_name(messageText):
         global editResponse
@@ -706,29 +728,6 @@ def delete_name(messageText):
         else :
                 deleteResponse = splitString[1] +" not found"
                 return deleteResponse
-
-def edit_data(name):
-        payload = request.json
-        messageText = payload['events'][0]['message']['text']
-        global editObject
-        global editResponse
-        editObject = "No data found"
-        if name=="":
-                editResponse = "No name found"                
-                return editResponse,editObject
-        else:
-                editObject = messageText.replace("!edit_"+name+'_',"")
-                editResponse = "edit successfully!"
-                return editObject,editResponse
-
-def remove_name(name):
-        payload = request.json
-        messageText = payload['events'][0]['message']['text']
-        global removeResponse
-        removeResponse = "remove "+name+" successfully!"
-        name = ""
-        editObject = ""
-        return name,removeResponse,editObject
 
 @app.route('/',methods = ['GET'])
 def hello():
