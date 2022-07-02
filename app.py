@@ -527,7 +527,8 @@ def handle_message(event):
         ,messageText.lower()).group()) in messageText.lower()) :
                 if (type(re.search(joinedListAccountName
                 ,messageText.lower()))!=None):
-                        read_db(messageText.lower())
+                        translate_name(messageText)
+                        read_db(translateName)
                         print(jsonAccount)
                         line_bot_api.reply_message(event.reply_token,TextSendMessage(
                                 jsonAccount
@@ -563,7 +564,6 @@ def handle_message(event):
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(
                         jsonAccount
                 ))
-
         elif '!jame' in messageText.lower() or '!เจม' in messageText or '@'+jame_display_name+' ขอเลข' in messageText:
                 read_db()
                 print(jsonAccount)
@@ -627,7 +627,7 @@ def handle_message(event):
         elif  re.search(joinedListAccountName
         ,messageText.lower()) != None and '!edit_'+re.search(joinedListAccountName
         ,messageText.lower()).group()+'_' in messageText.lower():
-                edit_name(messageText.lower())
+                edit_name(messageText)
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(editResponse))
         elif  re.search(joinedListAccountName
@@ -645,6 +645,54 @@ def handle_message(event):
 #         petch = messageText.replace("!edit_petch_","")
 #         editObject = "edit successfully!"
 #         return petch,editObject
+
+def translate_name(messageText):
+        global translateName        
+        if '!มน' in messageText:
+                translateName = re.sub("!มน","!mon",messageText)
+                return translateName
+        elif '!เพชร' in messageText:
+                translateName = re.sub("!เพชร","!petch",messageText)
+                return translateName
+        elif '!ต้า' in messageText:
+                translateName = re.sub("!ต้า","!tar",messageText)
+                return translateName
+        elif '!ทอย' in messageText:
+                translateName = re.sub("!ทอย","!toy",messageText)
+                return translateName
+        elif '!ฝ้าย' in messageText:
+                translateName = re.sub("!ฝ้าย","!fai",messageText)
+                return translateName
+        elif '!คิว' in messageText:
+                translateName = re.sub("!คิว","!que",messageText)
+                return translateName
+        elif '!เจมส์' in messageText:
+                translateName = re.sub("เจมส์",'!jame',messageText)
+                return translateName
+        elif '!เจม' in messageText:
+                translateName = re.sub("!เจม","!jame",messageText)
+                return translateName
+        elif '!โป๊ต' in messageText:
+                translateName = re.sub("!โป๊ต","!poat",messageText)
+                return translateName
+        elif '!เบลล์' in messageText:
+                translateName = re.sub("!เบลล์","!bell",messageText)
+                return translateName
+        elif '!เบล' in messageText:
+                translateName = re.sub("!เบล","!bell",messageText)
+                return translateName
+        elif '!แฮ็ก' in messageText:
+                translateName = re.sub("!แฮ็ก","!hack",messageText)
+                return translateName
+        elif '!แฮ็ค' in messageText:
+                translateName = re.sub("!แฮ็ค","!hack",messageText)
+                return translateName
+        elif '!ต้น' in messageText:
+                translateName = re.sub("!ต้น","!ton",messageText)
+                return translateName
+        else :
+                translateName = messageText.lower()
+                return translateName
 
 def read_db(messageText):
         nameAndMesseageText = messageText.replace("!","")
