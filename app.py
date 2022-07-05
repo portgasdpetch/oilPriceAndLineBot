@@ -323,7 +323,7 @@ print(joinedListAccountName)
 # db.child('accountName').child("poat").child("fullName").remove()
 
 # db.child("accountName").child("que").child("!fullName").set("Chanin Taweeluthikunchai")
-# db.child("accountName").child("que").child("account").child("Promptpay").set("0880203451")
+# db.child("accountName").child("que").child("account").child("Promptpay").set("0944412122")
 # # db.child('accountName').child("que").child("fullName").remove()
 
 # db.child("accountName").child("jame").child("!fullName").set("Chaiyanat Noodang")
@@ -530,85 +530,75 @@ def handle_message(event):
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(
                         jsonAccount
                 ))
-        elif '!petch' in messageText.lower() or '!เพชร' in messageText or '@'+petch_display_name+' ขอเลข' in messageText:                
-                translate_name(messageText)
-                read_db(translateName)
-                print(jsonAccount)
-                line_bot_api.reply_message(event.reply_token,TextSendMessage(
-                        jsonAccount
-                ))
+        # elif '!petch' in messageText.lower() or '!เพชร' in messageText or '@'+petch_display_name+' ขอเลข' in messageText:                
+        #         translate_name(messageText)
+        #         read_db(translateName)
+        #         line_bot_api.reply_message(event.reply_token,TextSendMessage(
+        #                 jsonAccount
+        #         ))
         elif 'qr_petch' in messageText.lower() or 'qr petch' in messageText.lower() or 'qrpetch' in messageText.lower():
                 line_bot_api.reply_message(event.reply_token,ImageSendMessage(
                 original_content_url="https://firebasestorage.googleapis.com/v0/b/meeseeks-34d9f.appspot.com/o/qr_promptpay%2F1653646122742.jpeg?alt=media&token=fe3fa019-6b27-48bf-bc28-e366b913fffe",
                 preview_image_url="https://firebasestorage.googleapis.com/v0/b/meeseeks-34d9f.appspot.com/o/qr_promptpay%2F1653646122742.jpeg?alt=media&token=fe3fa019-6b27-48bf-bc28-e366b913fffe"))
-        elif '!mon' in messageText.lower() or '!มน' in messageText or '@'+mon_display_name+' ขอเลข' in messageText:
-                translate_name(messageText)
-                read_db(translateName)
-                print(jsonAccount)
-                line_bot_api.reply_message(event.reply_token,TextSendMessage(
-                        jsonAccount
-                ))
-        elif '!toy' in messageText.lower() or '!ทอย' in messageText or '@'+toy_display_name+' ขอเลข' in messageText:
-                translate_name(messageText)
-                read_db(translateName)
-                print(jsonAccount)
-                line_bot_api.reply_message(event.reply_token,TextSendMessage(
-                        jsonAccount
-                ))
-        elif '!ton' in messageText.lower() or '!ต้น' in messageText:
-                translate_name(messageText)
-                read_db(translateName)
-                print(jsonAccount)
-                line_bot_api.reply_message(event.reply_token,TextSendMessage(
-                        jsonAccount
-                ))
-        elif '!jame' in messageText.lower() or '!เจม' in messageText or '@'+jame_display_name+' ขอเลข' in messageText:
-                translate_name(messageText)
-                read_db(translateName)
-                print(jsonAccount)
-                line_bot_api.reply_message(event.reply_token,TextSendMessage(
-                        jsonAccount
-                ))
-        elif '!poat' in messageText.lower() or '!โป๊ต' in messageText:
-                translate_name(messageText)
-                read_db(translateName)
-                print(jsonAccount)
-                line_bot_api.reply_message(event.reply_token,TextSendMessage(
-                        jsonAccount
-                ))
-        elif '!bell' in messageText.lower() or '!เบล' in messageText:
-                translate_name(messageText)
-                read_db(translateName)
-                print(jsonAccount)
-                line_bot_api.reply_message(event.reply_token,TextSendMessage(
-                        jsonAccount
-                ))
-        elif '!tar' in messageText.lower() or '!ต้า' in messageText or '@'+tar_display_name+' ขอเลข' in messageText:
-                translate_name(messageText)
-                read_db(translateName)
-                print(jsonAccount)
-                line_bot_api.reply_message(event.reply_token,TextSendMessage(
-                        jsonAccount
-                ))
+        # elif '!mon' in messageText.lower() or '!มน' in messageText or '@'+mon_display_name+' ขอเลข' in messageText:
+        #         translate_name(messageText)
+        #         read_db(translateName)
+        #         line_bot_api.reply_message(event.reply_token,TextSendMessage(
+        #                 jsonAccount
+        #         ))
+        # elif '!toy' in messageText.lower() or '!ทอย' in messageText or '@'+toy_display_name+' ขอเลข' in messageText:
+        #         translate_name(messageText)
+        #         read_db(translateName)
+        #         line_bot_api.reply_message(event.reply_token,TextSendMessage(
+        #                 jsonAccount
+        #         ))
+        # elif '!ton' in messageText.lower() or '!ต้น' in messageText:
+        #         translate_name(messageText)
+        #         read_db(translateName)
+        #         line_bot_api.reply_message(event.reply_token,TextSendMessage(
+        #                 jsonAccount
+        #         ))
+        # elif '!jame' in messageText.lower() or '!เจม' in messageText or '@'+jame_display_name+' ขอเลข' in messageText:
+        #         translate_name(messageText)
+        #         read_db(translateName)
+        #         line_bot_api.reply_message(event.reply_token,TextSendMessage(
+        #                 jsonAccount
+        #         ))
+        # elif '!poat' in messageText.lower() or '!โป๊ต' in messageText:
+        #         translate_name(messageText)
+        #         read_db(translateName)
+        #         line_bot_api.reply_message(event.reply_token,TextSendMessage(
+        #                 jsonAccount
+        #         ))
+        # elif '!bell' in messageText.lower() or '!เบล' in messageText:
+        #         translate_name(messageText)
+        #         read_db(translateName)
+        #         line_bot_api.reply_message(event.reply_token,TextSendMessage(
+        #                 jsonAccount
+        #         ))
+        # elif '!tar' in messageText.lower() or '!ต้า' in messageText or '@'+tar_display_name+' ขอเลข' in messageText:
+        #         translate_name(messageText)
+        #         read_db(translateName)
+        #         line_bot_api.reply_message(event.reply_token,TextSendMessage(
+        #                 jsonAccount
+        #         ))
         elif 'qr_tar' in messageText.lower() or 'qr tar' in messageText.lower() or 'qrtar' in messageText.lower():
                 line_bot_api.reply_message(event.reply_token,ImageSendMessage(
                 original_content_url='https://firebasestorage.googleapis.com/v0/b/meeseeks-34d9f.appspot.com/o/qr_promptpay%2FD9FDEF12-F3DC-4BE1-BA12-9E195A1E0462.jpg?alt=media&token=200f5f16-eb55-4e45-a1c2-0286dfef5576',
                 preview_image_url='https://firebasestorage.googleapis.com/v0/b/meeseeks-34d9f.appspot.com/o/qr_promptpay%2FD9FDEF12-F3DC-4BE1-BA12-9E195A1E0462.jpg?alt=media&token=200f5f16-eb55-4e45-a1c2-0286dfef5576'
                 ))
-        elif '!fai' in messageText.lower() or '!ฝ้าย' in messageText:
-                translate_name(messageText)
-                read_db(translateName)
-                print(jsonAccount)
-                line_bot_api.reply_message(event.reply_token,TextSendMessage(
-                        jsonAccount
-                ))
-        elif '!que' in messageText.lower() or '!คิว' in messageText or '@'+que_display_name+' ขอเลข' in messageText:
-                translate_name(messageText)
-                read_db(translateName)
-                print(jsonAccount)
-                line_bot_api.reply_message(event.reply_token,TextSendMessage(
-                        jsonAccount
-                ))
+        # elif '!fai' in messageText.lower() or '!ฝ้าย' in messageText:
+        #         translate_name(messageText)
+        #         read_db(translateName)
+        #         line_bot_api.reply_message(event.reply_token,TextSendMessage(
+        #                 jsonAccount
+        #         ))
+        # elif '!que' in messageText.lower() or '!คิว' in messageText or '@'+que_display_name+' ขอเลข' in messageText:
+        #         translate_name(messageText)
+        #         read_db(translateName)
+        #         line_bot_api.reply_message(event.reply_token,TextSendMessage(
+        #                 jsonAccount
+        #         ))
         elif '!help' in messageText.lower():
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage("!account_help\n!gas_help"))     
@@ -628,8 +618,8 @@ def handle_message(event):
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(addResponse))
         elif  re.search(joinedListAccountName
-        ,messageText.lower()) != None and '!edit_'+re.search(joinedListAccountName
-        ,messageText.lower()).group()+'_' in messageText.lower():
+        ,translateName) != None and '!edit_'+re.search(joinedListAccountName
+        ,translateName).group()+'_' in messageText.lower():
                 edit_name(messageText)
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(editResponse))
@@ -637,6 +627,18 @@ def handle_message(event):
         ,messageText.lower()) != None and '!delete_'+re.search(joinedListAccountName
         ,messageText.lower()).group() in messageText.lower():
                 delete_name(messageText.lower())
+                line_bot_api.reply_message(event.reply_token,
+                TextSendMessage(deleteResponse))
+        elif  re.search(joinedListAccountName
+        ,translateName) != None and '!edit_account'+re.search(joinedListAccountName
+        ,translateName).group()+'_' in messageText.lower():
+                edit_account(messageText)
+                line_bot_api.reply_message(event.reply_token,
+                TextSendMessage(editResponse))
+        elif  re.search(joinedListAccountName
+        ,messageText.lower()) != None and '!delete_account_'+re.search(joinedListAccountName
+        ,messageText.lower()).group() in messageText.lower():
+                delete_account(messageText.lower())
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage(deleteResponse))
 
@@ -706,8 +708,8 @@ def read_db(messageText):
                 account = db.child("accountName").child(name).get()
                 ascendingDict = {}
                 ascendingDict.update(account.val())
-                print(account.val())
-                print(ascendingDict)
+                # print(account.val())
+                # print(ascendingDict)
                 #use lambda function to keep the key and value of the dict, or only the keys are rest
                 descendingDict = sorted(ascendingDict.items(),key = lambda x: x,
                 reverse=True)
@@ -757,26 +759,59 @@ def edit_name(messageText):
         global editResponse
         splitString = messageText.split("_")
         onlyFullName = splitString[2]
-        onlyName = splitString[1]
+        onlyName = splitString[1].lower()
         if re.search(joinedListAccountName,onlyName):
-                editFullName = db.child("accountName").child(splitString[1]).child("!fullName").set(splitString[2])
-                editResponse = "edit "+splitString[1]+" successfully!"
-                return editResponse
+                if onlyFullName == "" :
+                        editResponse = "Please type the full name after the <nickname_>"
+                else :
+                        db.child("accountName").child(onlyName).child("!fullName").set(onlyFullName)
+                        editResponse = "edit "+splitString[1]+" successfully!"
+                        return editResponse
         else :
                 editResponse = splitString[1] +" not found"
                 return editResponse
 
+def edit_account(messageText):
+        global editAccountResponse
+        splitString = messageText.split("_")
+        onlyName = splitString[2].lower()
+        if re.search(joinedListAccountName,onlyName):
+                if len(splitString[3]) == 3:
+                        db.child("accountName").child(onlyName).child("account").child(splitString[3].upper()).set(splitString[4])
+                else :
+                        db.child("accountName").child(onlyName).child("account").child(splitString[3].capitalize()).set(splitString[4])
+                editAccountResponse = "edit "+onlyName+" successfully!"
+                return editAccountResponse
+        else:
+                editAccountResponse = splitString[2] +" not found"
+                return editAccountResponse
+
 def delete_name(messageText):
         global deleteResponse
         splitString = messageText.split("_")
-        onlyName = splitString[1]
+        onlyName = splitString[1].lower()
         if re.search(joinedListAccountName,onlyName):
-                db.child("accountName").child(splitString[1]).remove()
+                db.child("accountName").child(onlyName).remove()
                 deleteResponse = "delete "+splitString[1]+" successfully!"
                 return deleteResponse
         else :
                 deleteResponse = splitString[1] +" not found"
                 return deleteResponse
+
+def delete_account(messageText):
+        global deleteAccountResponse
+        splitString = messageText.split("_")
+        onlyName = splitString[2].lower()
+        if re.search(joinedListAccountName,onlyName):
+                if splitString[3]=="":
+                        deleteAccountResponse = "Please type the bank account you want to remove eg. kbank, promptpay"
+                elif len(splitString[3]) == 3 :
+                        db.child("accountName").child(onlyName).child("account").chlid(splitString[3].upper().remove())
+                else:
+                        db.child("accountName").child(onlyName).child("account").child(splitString[3].capitalize().remove())
+        else :
+                deleteAccountResponse = splitString[2] +" not found"
+                return deleteAccountResponse
 
 @app.route('/',methods = ['GET'])
 def hello():
