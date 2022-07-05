@@ -436,10 +436,10 @@ jame_display_name = profileJame.display_name
 def handle_message(event):
         payload = request.json
         messageText = payload['events'][0]['message']['text']
+        translate_name(messageText)
         # typerId = payload['events'][0]['source']['userId']
         # typerProfile = line_bot_api.get_profile(typerId)
         # typerName = typerProfile.display_name
-
         if '!heroku' in messageText.lower():
                 line_bot_api.reply_message(event.reply_token,
                 TextSendMessage('https://fathomless-garden-59642.herokuapp.com/callback'))
@@ -523,19 +523,13 @@ def handle_message(event):
                 jsonGetAll = json.dumps(getAll,indent=1)
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(jsonGetAll.replace("{","").replace("}","").replace('"',"").replace(",","").strip()))
         elif re.search(joinedListAccountName
-        ,messageText.lower()) != None and ('!'+(re.search(joinedListAccountName
-        ,messageText.lower()).group()) in messageText.lower()) :
-                if (type(re.search(joinedListAccountName
-                ,messageText.lower()))!=None):
-                        translate_name(messageText)
-                        read_db(translateName)
-                        print(jsonAccount)
-                        line_bot_api.reply_message(event.reply_token,TextSendMessage(
-                                jsonAccount
-                        ))
-                elif (type(re.search(joinedListAccountName
-                ,messageText.lower()))==None):
-                        pass
+        ,translateName) != None and ('!'+(re.search(joinedListAccountName
+        ,translateName).group()) in translateName) :
+                read_db(translateName)
+                print(jsonAccount)
+                line_bot_api.reply_message(event.reply_token,TextSendMessage(
+                        jsonAccount
+                ))
         elif '!petch' in messageText.lower() or '!เพชร' in messageText or '@'+petch_display_name+' ขอเลข' in messageText:                
                 translate_name(messageText)
                 read_db(translateName)
@@ -543,7 +537,7 @@ def handle_message(event):
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(
                         jsonAccount
                 ))
-        elif 'qr_petch' in messageText.lower():
+        elif 'qr_petch' in messageText.lower() or 'qr petch' in messageText.lower() or 'qrpetch' in messageText.lower():
                 line_bot_api.reply_message(event.reply_token,ImageSendMessage(
                 original_content_url="https://firebasestorage.googleapis.com/v0/b/meeseeks-34d9f.appspot.com/o/qr_promptpay%2F1653646122742.jpeg?alt=media&token=fe3fa019-6b27-48bf-bc28-e366b913fffe",
                 preview_image_url="https://firebasestorage.googleapis.com/v0/b/meeseeks-34d9f.appspot.com/o/qr_promptpay%2F1653646122742.jpeg?alt=media&token=fe3fa019-6b27-48bf-bc28-e366b913fffe"))
@@ -589,7 +583,6 @@ def handle_message(event):
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(
                         jsonAccount
                 ))
-
         elif '!tar' in messageText.lower() or '!ต้า' in messageText or '@'+tar_display_name+' ขอเลข' in messageText:
                 translate_name(messageText)
                 read_db(translateName)
@@ -597,7 +590,7 @@ def handle_message(event):
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(
                         jsonAccount
                 ))
-        elif 'qr_tar' in messageText.lower():
+        elif 'qr_tar' in messageText.lower() or 'qr tar' in messageText.lower() or 'qrtar' in messageText.lower():
                 line_bot_api.reply_message(event.reply_token,ImageSendMessage(
                 original_content_url='https://firebasestorage.googleapis.com/v0/b/meeseeks-34d9f.appspot.com/o/qr_promptpay%2FD9FDEF12-F3DC-4BE1-BA12-9E195A1E0462.jpg?alt=media&token=200f5f16-eb55-4e45-a1c2-0286dfef5576',
                 preview_image_url='https://firebasestorage.googleapis.com/v0/b/meeseeks-34d9f.appspot.com/o/qr_promptpay%2FD9FDEF12-F3DC-4BE1-BA12-9E195A1E0462.jpg?alt=media&token=200f5f16-eb55-4e45-a1c2-0286dfef5576'
@@ -708,9 +701,7 @@ def read_db(messageText):
         nameAndMesseageText = messageText.replace("!","")
         nameGroup = re.search(joinedListAccountName
         ,nameAndMesseageText)
-        print(nameGroup)
         name = nameGroup.group()
-        print(name)
         if (name):
                 account = db.child("accountName").child(name).get()
                 ascendingDict = {}
@@ -734,7 +725,7 @@ def read_db(messageText):
 def add_name(messageText):
         global addResponse
         splitString = messageText.split("_")
-        if len(splitString)==1:
+        if splitString[1]=="":
                 addResponse = "Please type a name after the \"_\""
                 return addResponse
         elif len(splitString)==2:
